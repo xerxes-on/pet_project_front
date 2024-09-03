@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+a:hover, button:hover{
+    font-size: larger;
+}
