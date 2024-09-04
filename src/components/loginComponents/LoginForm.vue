@@ -9,18 +9,31 @@ const data = reactive({
     email: '',
     password: '',
 })
-
+const loginHandler = async () => {
+    try {
+        const response = await authAPI.login(data);
+        console.log(response)
+        if (response.status === 200) {
+            console.log("success");
+        } else {
+            console.log("error handling");
+        }
+    } catch (err) {
+        console.log(err);
+    } finally {
+    }
+};
 </script>
 <template>
     <div class="bg-light_blue w-full rounded-2xl p-4 py-10 mb-2 relative flex flex-col justify-center items-center">
         <h2 class="text-2xl font-bold mb-2">Welcome Back</h2>
         <p class="mb-6">Login to Continue</p>
 
-        <form @submit.prevent="" class="flex flex-col justify-center items-center w-full">
+        <form @submit.prevent="loginHandler" class="flex flex-col justify-center items-center w-full">
             <div class="mb-4 w-1/2">
                 <input
                     type="email"
-                    v-model="email"
+                    v-model="data.email"
                     placeholder="Enter Email"
                     class="w-full p-2 rounded-full" />
             </div>
@@ -28,7 +41,7 @@ const data = reactive({
                 <input
                     :type="showPassword ? 'text' : 'password'"
                     placeholder="Enter Password"
-                    v-model="password"
+                    v-model="data.password"
                     class="w-full p-2 rounded-full" />
                 <button
                     @click.prevent="showPassword = !showPassword"

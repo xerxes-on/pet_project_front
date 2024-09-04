@@ -1,8 +1,8 @@
 import client from "@/api/client.js";
 
-const login = () => {
+const login = (data) => {
     return client
-        .get('/books')
+        .post('/login',data)
         .then((response) => response)
         .catch((error) => error.response);
 }
