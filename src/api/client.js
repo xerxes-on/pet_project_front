@@ -4,7 +4,7 @@ import axios from "axios";
 // const authStore = useAuthStore();
 
 const client =  axios.create({
-        baseURL: 'http://bookrating.test/api/'
+        baseURL: 'http://bookrating.test/api'
     })
 
 export default  client
