@@ -1,6 +1,7 @@
 <script setup>
-import Svg from "@/components/Svg.vue";
+import Svg from "@/components/common/Svg.vue";
 import {ref} from "vue";
+import loading from "@/plugins/index.js";
 const showPassword = ref(false);
 </script>
 
@@ -35,7 +36,7 @@ const showPassword = ref(false);
                     placeholder="Confirm Password"
                     class="w-full p-2 rounded-full"/>
                 <button
-                    @click.prevent="showPassword = !showPassword"
+                    @click.prevent="loading.value = ! loading.value"
                     class="absolute right-3 top-2.5">
                     <i class="fa-regular"
                        :class="showPassword ? 'fa-eye' : 'fa-eye-slash'"/>

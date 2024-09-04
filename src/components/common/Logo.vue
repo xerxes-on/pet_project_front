@@ -1,5 +1,5 @@
 <script setup>
-import Image from "@/components/Image.vue";
+import Image from "@/components/common/Image.vue";
 const props = defineProps({
   width: {
     type: String,
