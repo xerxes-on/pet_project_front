@@ -1,12 +1,12 @@
-import client from "@/api/client.js";
+import client from '@/api/client.js'
 
 const login = (data) => {
     return client
-        .post('/login',data)
+        .post('/login', data)
         .then((response) => response)
-        .catch((error) => error.response);
+        .catch((error) => error.response)
 }
 const authAPI = {
     login,
-};
-export default authAPI;
+}
+export default authAPI

@@ -1,23 +1,26 @@
 <script setup>
-import Image from "@/components/common/Image.vue";
+import Image from '@/components/common/Image.vue'
 const props = defineProps({
-  width: {
-    type: String,
-    default: '200px'
-  },
-  height: {
-    type: String,
-    default: '200px'
-  }
+    width: {
+        type: String,
+        default: '200px',
+    },
+    height: {
+        type: String,
+        default: '200px',
+    },
 })
 </script>
 
 <template>
-  <div class="flex items-center mb-8">
-    <Image name="logo.png" :w="props.width" :h="props.height" class="rounded-full"/>
-  </div>
+    <div class="flex items-center mb-8">
+        <Image
+            name="logo.png"
+            :w="props.width"
+            :h="props.height"
+            class="rounded-full"
+        />
+    </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

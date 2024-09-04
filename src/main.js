@@ -1,9 +1,9 @@
 import './assets/main.css'
 
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 
 import App from './App.vue'
-import {registerPlugins} from "@/plugins/index.js";
+import { registerPlugins } from '@/plugins/index.js'
 
 const app = createApp(App)
 

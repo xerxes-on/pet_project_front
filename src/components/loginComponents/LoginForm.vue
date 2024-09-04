@@ -11,47 +11,59 @@ const data = reactive({
 })
 const loginHandler = async () => {
     try {
-        const response = await authAPI.login(data);
+        const response = await authAPI.login(data)
         console.log(response)
         if (response.status === 200) {
-            console.log("success");
+            console.log('success')
         } else {
-            console.log("error handling");
+            console.log('error handling')
         }
     } catch (err) {
-        console.log(err);
+        console.log(err)
     } finally {
     }
-};
+}
 </script>
 <template>
-    <div class="bg-light_blue w-full rounded-2xl p-4 py-10 mb-2 relative flex flex-col justify-center items-center">
+    <div
+        class="bg-light_blue w-full rounded-2xl p-4 py-10 mb-2 relative flex flex-col justify-center items-center"
+    >
         <h2 class="text-2xl font-bold mb-2">Welcome Back</h2>
         <p class="mb-6">Login to Continue</p>
 
-        <form @submit.prevent="loginHandler" class="flex flex-col justify-center items-center w-full">
+        <form
+            @submit.prevent="loginHandler"
+            class="flex flex-col justify-center items-center w-full"
+        >
             <div class="mb-4 w-1/2">
                 <input
                     type="email"
                     v-model="data.email"
                     placeholder="Enter Email"
-                    class="w-full p-2 rounded-full" />
+                    class="w-full p-2 rounded-full"
+                />
             </div>
             <div class="mb-4 relative w-1/2">
                 <input
                     :type="showPassword ? 'text' : 'password'"
                     placeholder="Enter Password"
                     v-model="data.password"
-                    class="w-full p-2 rounded-full" />
+                    class="w-full p-2 rounded-full"
+                />
                 <button
                     @click.prevent="showPassword = !showPassword"
-                    class="absolute right-3 top-2.5">
-                    <i class="fa-regular"
-                       :class="showPassword ? 'fa-eye' : 'fa-eye-slash'" />
+                    class="absolute right-3 top-2.5"
+                >
+                    <i
+                        class="fa-regular"
+                        :class="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+                    />
                 </button>
             </div>
-            <button type="submit"
-                    class="w-1/4 bg-primary_dark text-black font-bold  rounded-full mb-4">
+            <button
+                type="submit"
+                class="w-1/4 bg-primary_dark text-black font-bold rounded-full mb-4"
+            >
                 Login
             </button>
         </form>
@@ -61,30 +73,39 @@ const loginHandler = async () => {
         <div class="text-center mb-4">
             <p class="text-sm mb-2">Login with</p>
             <div class="flex justify-center space-x-4">
-                <a href="#" class="text-2xl"><i class="fa-brands fa-google"></i></a>
-                <a href="#" class="text-2xl"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#" class="text-2xl"><i class="fa-brands fa-apple"></i></a>
-                <a href="#" class="text-2xl"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="text-2xl"
+                    ><i class="fa-brands fa-google"></i
+                ></a>
+                <a href="#" class="text-2xl"
+                    ><i class="fa-brands fa-facebook"></i
+                ></a>
+                <a href="#" class="text-2xl"
+                    ><i class="fa-brands fa-apple"></i
+                ></a>
+                <a href="#" class="text-2xl"
+                    ><i class="fa-brands fa-twitter"></i
+                ></a>
             </div>
         </div>
 
         <!-- Decorative elements -->
         <div class="absolute -top-8 right-4">
-            <div class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center">
+            <div
+                class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center"
+            >
                 <!-- Book icon placeholder -->
                 <Svg name="login3" w="300px" h="300px" />
             </div>
         </div>
         <div class="absolute bottom-12 left-10">
-            <div class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center">
+            <div
+                class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center"
+            >
                 <!-- Book icon placeholder -->
                 <Svg name="login1" w="300px" h="300px" />
             </div>
         </div>
     </div>
-
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
