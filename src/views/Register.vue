@@ -20,7 +20,9 @@ import Logo from '@/components/common/Logo.vue'
 
             <p class="text-center">
                 Already a user?
-                <router-link to="{{ {name: 'login'} }}" class="text-blue-600 font-bold"
+                <router-link
+                    to="{{ {name: 'login'} }}"
+                    class="text-blue-600 font-bold"
                     >Login</router-link
                 >
             </p>

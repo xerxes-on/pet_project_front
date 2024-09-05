@@ -15,23 +15,23 @@ const router = createRouter({
             component: () => import('@/views/Register.vue'),
         },
         {
-            path: '/home',
+            path: '/',
             name: 'home',
             component: () => import('@/views/Home.vue'),
         },
     ],
 })
 router.beforeEach((to, from, next) => {
-    const authStore = useAuthStore();
-    const isAuthenticated = authStore.isAuthorized;
+    const authStore = useAuthStore()
+    const isAuthenticated = authStore.isAuthorized
 
-    if (!isAuthenticated && (to.name !== 'login' ||) ) {
-        next({name: 'login'});
+    if (!isAuthenticated && !['login', 'register'].includes(to.name)) {
+        next({ name: 'login' })
     } else if (isAuthenticated && to.name === 'login') {
-        next({name: 'home'});
+        next({ name: 'home' })
     } else {
-        next();
+        next()
     }
-});
+})
 
 export default router

@@ -15,6 +15,6 @@ const register = (data) => {
 }
 const authAPI = {
     login,
-    register
+    register,
 }
 export default authAPI

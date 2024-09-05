@@ -10,12 +10,11 @@ import { useRouter } from 'vue-router'
 const showPassword = ref(false)
 const router = useRouter()
 
-
 const data = reactive({
     name: '',
     email: '',
     password: '',
-    confirm_password: ''
+    confirm_password: '',
 })
 const passwordRef = toRef(data, 'password')
 
@@ -25,8 +24,8 @@ const validations = {
     password: { required },
     confirm_password: {
         required,
-        sameAsPassword: sameAs(passwordRef) // Use the ref to make it reactive
-    }
+        sameAsPassword: sameAs(passwordRef), // Use the ref to make it reactive
+    },
 }
 const v$ = useVuelidate(validations, data)
 
@@ -39,19 +38,16 @@ const registerHandler = async () => {
                 const authStore = useAuthStore()
                 authStore.setUser(response.data.user)
                 authStore.setToken(response.data.authorization.token)
-                await router.push({name: "home"})
+                await router.push({ name: 'home' })
             } else {
-                alert("Something went wrong try again")
+                alert('Something went wrong try again')
             }
         } catch (err) {
             console.log(err)
         } finally {
         }
     }
-
 }
-
-
 </script>
 
 <template>
@@ -63,7 +59,8 @@ const registerHandler = async () => {
         <!--Form-->
         <form
             class="flex flex-col justify-center items-center w-full"
-            @submit.prevent="registerHandler">
+            @submit.prevent="registerHandler"
+        >
             <div class="mb-4 w-1/2">
                 <input
                     type="text"
@@ -71,7 +68,11 @@ const registerHandler = async () => {
                     v-model="data.name"
                     class="w-full p-2 rounded-full"
                 />
-                <div class="input-errors" v-for="error of v$.name.$errors" :key="error.$uid">
+                <div
+                    class="input-errors"
+                    v-for="error of v$.name.$errors"
+                    :key="error.$uid"
+                >
                     <span class="error-msg">{{ error.$message }}</span>
                 </div>
             </div>
@@ -82,7 +83,11 @@ const registerHandler = async () => {
                     placeholder="Enter email"
                     class="w-full p-2 rounded-full"
                 />
-                <div class="input-errors" v-for="error of v$.email.$errors" :key="error.$uid">
+                <div
+                    class="input-errors"
+                    v-for="error of v$.email.$errors"
+                    :key="error.$uid"
+                >
                     <span class="error-msg">{{ error.$message }}</span>
                 </div>
             </div>
@@ -102,7 +107,11 @@ const registerHandler = async () => {
                         :class="showPassword ? 'fa-eye' : 'fa-eye-slash'"
                     />
                 </button>
-                <div class="input-errors" v-for="error of v$.password.$errors" :key="error.$uid">
+                <div
+                    class="input-errors"
+                    v-for="error of v$.password.$errors"
+                    :key="error.$uid"
+                >
                     <span class="error-msg">{{ error.$message }}</span>
                 </div>
             </div>
@@ -114,15 +123,17 @@ const registerHandler = async () => {
                     v-model="data.confirm_password"
                     class="w-full p-2 rounded-full"
                 />
-                <button
-                    class="absolute right-3 top-2.5"
-                >
+                <button class="absolute right-3 top-2.5">
                     <i
                         class="fa-regular"
                         :class="showPassword ? 'fa-eye' : 'fa-eye-slash'"
                     />
                 </button>
-                <div class="input-errors" v-for="error of v$.confirm_password.$errors" :key="error.$uid">
+                <div
+                    class="input-errors"
+                    v-for="error of v$.confirm_password.$errors"
+                    :key="error.$uid"
+                >
                     <span class="error-msg">{{ error.$message }}</span>
                 </div>
             </div>
@@ -172,8 +183,8 @@ const registerHandler = async () => {
 </template>
 
 <style scoped>
-.error-msg{
+.error-msg {
     color: red;
-    font-weight: 500
+    font-weight: 500;
 }
 </style>

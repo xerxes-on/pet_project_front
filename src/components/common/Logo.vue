@@ -19,7 +19,8 @@ const props = defineProps({
             :width="props.width"
             :height="props.height"
             class="rounded-full"
-         src="@/assets/images/logo.png"/>
+            src="@/assets/images/logo.png"
+        />
     </div>
 </template>
 

@@ -2,23 +2,21 @@
 import authAPI from '@/api/auth.js'
 import Svg from '@/components/common/Svg.vue'
 import { useVuelidate } from '@vuelidate/core'
-import { required, email } from '@vuelidate/validators'
+import { email, required } from '@vuelidate/validators'
 import { reactive, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth.js'
 import { useRouter } from 'vue-router'
-import { useErrorPop } from '@/stores/index.js'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
-
 
 const router = useRouter()
 const showPassword = ref(false)
 const data = reactive({
     email: '',
-    password: ''
+    password: '',
 })
 const validations = {
     password: { required },
-    email: { required, email }
+    email: { required, email },
 }
 const v$ = useVuelidate(validations, data)
 const error = ref(false)
@@ -31,19 +29,20 @@ const loginHandler = async () => {
                 const authStore = useAuthStore()
                 authStore.setUser(response.data.user)
                 authStore.setToken(response.data.authorization.token)
-                await router.push({name: "home"})
+                await router.push({ name: 'home' })
             } else {
                 error.value = true
             }
         } catch (err) {
             console.log(err)
-        } finally { /* empty */ }
+        } finally {
+            /* empty */
+        }
     }
-
 }
 </script>
 <template>
-    <ErrorPopup v-show="error"/>
+    <ErrorPopup v-if="error" v-model="error" />
     <div
         class="bg-light_blue w-full rounded-2xl p-4 py-10 mb-2 relative flex flex-col justify-center items-center"
     >
@@ -60,10 +59,12 @@ const loginHandler = async () => {
                     v-model="data.email"
                     placeholder="Enter Email"
                     class="w-full p-2 rounded-full"
-
                 />
-                <div class=""
-                     v-for="error of v$.email.$errors" :key="error.$uid">
+                <div
+                    class=""
+                    v-for="error of v$.email.$errors"
+                    :key="error.$uid"
+                >
                     <span class="error-msg">{{ error.$message }}</span>
                 </div>
             </div>
@@ -83,7 +84,11 @@ const loginHandler = async () => {
                         :class="showPassword ? 'fa-eye' : 'fa-eye-slash'"
                     />
                 </button>
-                <div class="input-errors" v-for="error of v$.password.$errors" :key="error.$uid">
+                <div
+                    class="input-errors"
+                    v-for="error of v$.password.$errors"
+                    :key="error.$uid"
+                >
                     <span class="error-msg">{{ error.$message }}</span>
                 </div>
             </div>
@@ -101,16 +106,16 @@ const loginHandler = async () => {
             <p class="text-sm mb-2">Login with</p>
             <div class="flex justify-center space-x-4">
                 <a href="#" class="text-2xl"
-                ><i class="fa-brands fa-google"></i
+                    ><i class="fa-brands fa-google"></i
                 ></a>
                 <a href="#" class="text-2xl"
-                ><i class="fa-brands fa-facebook"></i
+                    ><i class="fa-brands fa-facebook"></i
                 ></a>
                 <a href="#" class="text-2xl"
-                ><i class="fa-brands fa-apple"></i
+                    ><i class="fa-brands fa-apple"></i
                 ></a>
                 <a href="#" class="text-2xl"
-                ><i class="fa-brands fa-twitter"></i
+                    ><i class="fa-brands fa-twitter"></i
                 ></a>
             </div>
         </div>
@@ -136,8 +141,8 @@ const loginHandler = async () => {
 </template>
 
 <style scoped>
-.error-msg{
+.error-msg {
     color: red;
-    font-weight: 500
+    font-weight: 500;
 }
 </style>

@@ -1,25 +1,25 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 export const useAuthStore = defineStore(
-    "authStore",
+    'authStore',
     () => {
-        const user = ref(null);
-        const token = ref("");
+        const user = ref(null)
+        const token = ref('')
 
         // call it on log out
         const resetStore = () => {
-            user.value = null;
-            token.value = "";
-        };
+            user.value = null
+            token.value = ''
+        }
         const setUser = (newUser) => {
-            user.value = newUser;
-        };
-        const isAuthorized = computed(() => !!user.value);
+            user.value = newUser
+        }
+        const isAuthorized = computed(() => !!user.value)
 
         const setToken = (newToken) => {
-            token.value = newToken;
-        };
+            token.value = newToken
+        }
 
         return {
             user,
@@ -27,8 +27,8 @@ export const useAuthStore = defineStore(
             setUser,
             setToken,
             resetStore,
-            isAuthorized
-        };
+            isAuthorized,
+        }
     },
-    { persist: true }
-);
+    { persist: true },
+)
