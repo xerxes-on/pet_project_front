@@ -1,8 +1,57 @@
 <script setup>
 import Svg from '@/components/common/Svg.vue'
-import { ref } from 'vue'
-import loading from '@/plugins/index.js'
+import { reactive, ref, toRef } from 'vue'
+import { email, required, sameAs } from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
+import authAPI from '@/api/auth.js'
+import { useAuthStore } from '@/stores/auth.js'
+import { useRouter } from 'vue-router'
+
 const showPassword = ref(false)
+const router = useRouter()
+
+
+const data = reactive({
+    name: '',
+    email: '',
+    password: '',
+    confirm_password: ''
+})
+const passwordRef = toRef(data, 'password')
+
+const validations = {
+    name: { required },
+    email: { required, email },
+    password: { required },
+    confirm_password: {
+        required,
+        sameAsPassword: sameAs(passwordRef) // Use the ref to make it reactive
+    }
+}
+const v$ = useVuelidate(validations, data)
+
+const registerHandler = async () => {
+    const validation = await v$.value.$validate()
+    if (validation) {
+        try {
+            const response = await authAPI.register(data)
+            if (response.status === 200) {
+                const authStore = useAuthStore()
+                authStore.setUser(response.data.user)
+                authStore.setToken(response.data.authorization.token)
+                await router.push({name: "home"})
+            } else {
+                alert("Something went wrong try again")
+            }
+        } catch (err) {
+            console.log(err)
+        } finally {
+        }
+    }
+
+}
+
+
 </script>
 
 <template>
@@ -12,25 +61,36 @@ const showPassword = ref(false)
         <h2 class="text-2xl font-bold mb-2">Welcome to LetsRate</h2>
         <p class="mb-6">Sign Up to Continue</p>
         <!--Form-->
-        <form class="flex flex-col justify-center items-center w-full">
+        <form
+            class="flex flex-col justify-center items-center w-full"
+            @submit.prevent="registerHandler">
             <div class="mb-4 w-1/2">
                 <input
                     type="text"
                     placeholder="Enter Name"
+                    v-model="data.name"
                     class="w-full p-2 rounded-full"
                 />
+                <div class="input-errors" v-for="error of v$.name.$errors" :key="error.$uid">
+                    <span class="error-msg">{{ error.$message }}</span>
+                </div>
             </div>
             <div class="mb-4 w-1/2">
                 <input
-                    type="text"
+                    type="email"
+                    v-model="data.email"
                     placeholder="Enter email"
                     class="w-full p-2 rounded-full"
                 />
+                <div class="input-errors" v-for="error of v$.email.$errors" :key="error.$uid">
+                    <span class="error-msg">{{ error.$message }}</span>
+                </div>
             </div>
             <div class="mb-4 relative w-1/2">
                 <input
                     :type="showPassword ? 'text' : 'password'"
                     placeholder="Enter Password"
+                    v-model="data.password"
                     class="w-full p-2 rounded-full"
                 />
                 <button
@@ -42,16 +102,19 @@ const showPassword = ref(false)
                         :class="showPassword ? 'fa-eye' : 'fa-eye-slash'"
                     />
                 </button>
+                <div class="input-errors" v-for="error of v$.password.$errors" :key="error.$uid">
+                    <span class="error-msg">{{ error.$message }}</span>
+                </div>
             </div>
 
             <div class="mb-4 relative w-1/2">
                 <input
                     :type="showPassword ? 'text' : 'password'"
                     placeholder="Confirm Password"
+                    v-model="data.confirm_password"
                     class="w-full p-2 rounded-full"
                 />
                 <button
-                    @click.prevent="loading.value = !loading.value"
                     class="absolute right-3 top-2.5"
                 >
                     <i
@@ -59,11 +122,14 @@ const showPassword = ref(false)
                         :class="showPassword ? 'fa-eye' : 'fa-eye-slash'"
                     />
                 </button>
+                <div class="input-errors" v-for="error of v$.confirm_password.$errors" :key="error.$uid">
+                    <span class="error-msg">{{ error.$message }}</span>
+                </div>
             </div>
             <button
                 class="w-1/4 bg-primary_dark text-black font-bold rounded-full mb-4"
             >
-                Login
+                Register
             </button>
         </form>
 
@@ -105,4 +171,9 @@ const showPassword = ref(false)
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.error-msg{
+    color: red;
+    font-weight: 500
+}
+</style>

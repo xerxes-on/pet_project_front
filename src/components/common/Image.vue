@@ -1,5 +1,6 @@
 <script setup>
-import { defineProps, ref } from 'vue'
+
+import { ref } from 'vue'
 
 const props = defineProps({
     name: {
@@ -18,12 +19,12 @@ const props = defineProps({
 
 const imageSrc = ref('')
 
-import(`../assets/images/${props.name}`)
+import(`@/assets/images/${props.name}`)
     .then((module) => {
         imageSrc.value = module.default
     })
     .catch((error) => {
-        console.error('Failed to load SVG:', error)
+        console.error('Failed to load image:', error)
     })
 </script>
 
