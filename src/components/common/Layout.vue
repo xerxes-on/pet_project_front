@@ -1,8 +1,6 @@
 <script setup>
-
 import DropDown from '@/components/common/DropDown.vue'
 import { ref } from 'vue'
-
 
 // Active menu state
 const activeMenu = ref(null)
@@ -21,23 +19,17 @@ const hideMenu = () => {
 
     <header class="bg-primary p-8 flex items-center justify-between">
         <!-- Logo Section -->
-        <RouterLink :to="{name: 'home'}">
+        <RouterLink :to="{ name: 'home' }">
             <div class="flex items-center space-x-2">
-                <img
-                    src="@/assets/images/logo.png"
-                    alt="Logo"
-                    class="w-10 h-10 rounded-full object-cover"
-                />
+                <img src="@/assets/images/logo.png" alt="Logo" class="w-10 h-10 rounded-full object-cover" />
                 <span class="text-xl font-bold">Logo Name</span>
             </div>
         </RouterLink>
         <!-- Navigation Section -->
         <nav class="flex space-x-8">
             <a href="#" class="relative group">
-                <RouterLink :to="{name: 'home'}" class="hover:text-orange-500 font-semibold">Home</RouterLink>
-                <span
-                    class="absolute bottom-0 left-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"
-                ></span>
+                <RouterLink :to="{ name: 'home' }" class="hover:text-orange-500 font-semibold">Home</RouterLink>
+                <span class="absolute bottom-0 left-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
             </a>
 
             <!-- Dropdown for My Books -->
@@ -59,18 +51,12 @@ const hideMenu = () => {
             </div>
 
             <RouterLink :to="{ name: 'profile' }">
-                <img
-                    src="@/assets/images/logo.png"
-                    alt="Profile"
-                    class="w-10 h-10 rounded-full object-cover"
-                />
+                <img src="@/assets/images/logo.png" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
             </RouterLink>
         </nav>
     </header>
 
-
     <slot></slot>
-
 
     <!--    Footer-->
     <footer class="bg-primary_dark py-10 px-6">
@@ -133,13 +119,10 @@ const hideMenu = () => {
                 <!-- App Store Icons -->
                 <div class="flex space-x-4 mb-4 md:mb-0">
                     <a href="#">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Apple_logo_black.svg"
-                             alt="App Store"
-                             class="h-12">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Apple_logo_black.svg" alt="App Store" class="h-12" />
                     </a>
                     <a href="#">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Google_Play_Icon.svg"
-                             alt="Google Play" class="h-12">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Google_Play_Icon.svg" alt="Google Play" class="h-12" />
                     </a>
                 </div>
 
@@ -150,13 +133,9 @@ const hideMenu = () => {
             </div>
         </div>
 
-
         <!-- Copyright -->
         <div class="border-t border-gray-300 mt-8 pt-6 text-center text-gray-500">
             <p>Copyright © YYYY - YYYY Company name. All rights reserved</p>
         </div>
     </footer>
-
-
 </template>
-

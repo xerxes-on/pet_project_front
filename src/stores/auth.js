@@ -30,5 +30,5 @@ export const useAuthStore = defineStore(
             isAuthorized,
         }
     },
-    { persist: true },
+    { persist: true }
 )

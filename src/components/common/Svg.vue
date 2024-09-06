@@ -28,12 +28,7 @@ import(`@/assets/svgs/${props.name}.svg`)
 </script>
 
 <template>
-    <img
-        v-if="imageSrc"
-        :src="imageSrc"
-        :alt="name"
-        :style="{ maxWidth: props.w, maxHeight: props.h }"
-    />
+    <img v-if="imageSrc" :src="imageSrc" :alt="name" :style="{ maxWidth: props.w, maxHeight: props.h }" />
 </template>
 
 <style scoped></style>

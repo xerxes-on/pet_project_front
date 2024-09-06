@@ -10,7 +10,7 @@ export default {
             primary: '#F6FFDE',
             dark_blue: '#265073',
             orange: '#EFEAD3',
-            white: '#FFF'
+            white: '#FFF',
         },
         extend: {
             fontFamily: {

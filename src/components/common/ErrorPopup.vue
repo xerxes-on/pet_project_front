@@ -16,7 +16,6 @@ onMounted(() => {
         isVisible.value = false
     }, 5000)
 })
-
 </script>
 
 <template>
@@ -31,16 +30,11 @@ onMounted(() => {
                 <span
                     class="inline-flex justify-center items-center size-8 rounded-full border-4 border-red-100 bg-red-200 text-red-800 dark:border-red-900 dark:bg-red-800 dark:text-red-400"
                 >
-              <IconClose @click="isVisible = false"/>
+                    <IconClose @click="isVisible = false" />
                 </span>
             </div>
             <div class="ms-3">
-                <h3
-                    id="hs-bordered-red-style-label"
-                    class="text-gray-800 font-semibold dark:text-white"
-                >
-                    Error!
-                </h3>
+                <h3 id="hs-bordered-red-style-label" class="text-gray-800 font-semibold dark:text-white">Error!</h3>
                 <p class="text-sm">
                     {{ props.message }}
                 </p>

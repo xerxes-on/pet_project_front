@@ -15,18 +15,11 @@ watch(count, () => {
 //         const response = await
 //     }
 // })
-
-
-
 </script>
 <template>
     <Layout>
-
         <Home />
-
     </Layout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

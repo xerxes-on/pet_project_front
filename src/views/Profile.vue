@@ -15,16 +15,14 @@ const getRandomHeight = () => `${Math.floor(Math.random() * 100) + 30}%`
     <Layout>
         <div class="bg-primary p-6">
             <div class="max-w-6xl mx-auto">
-                <UserInfo/>
-                <UserReading/>
-                <UserStats/>
-                <LogoutButton/>
+                <UserInfo />
+                <UserReading />
+                <UserStats />
+                <LogoutButton />
             </div>
         </div>
-
     </Layout>
 </template>
-
 
 <style scoped>
 /* Custom styles for the profile page can be added here */
