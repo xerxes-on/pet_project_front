@@ -1,38 +1,69 @@
 <script setup>
+import authAPI from '@/api/auth.js'
+import Svg from '@/components/common/Svg.vue'
+import { useVuelidate } from '@vuelidate/core'
+import { email, required } from '@vuelidate/validators'
+import { reactive, ref } from 'vue'
+import { useAuthStore } from '@/stores/auth.js'
+import { useRouter } from 'vue-router'
+import ErrorPopup from '@/components/common/ErrorPopup.vue'
 
-import Svg from "@/components/Svg.vue";
-import {ref} from "vue";
-const showPassword = ref(false);
-
+const router = useRouter()
+const showPassword = ref(false)
+const data = reactive({
+    email: '',
+    password: '',
+})
+const validations = {
+    password: { required },
+    email: { required, email },
+}
+const v$ = useVuelidate(validations, data)
+const error = ref(false)
+const loginHandler = async () => {
+    const validation = await v$.value.$validate()
+    if (validation) {
+        try {
+            const response = await authAPI.login(data)
+            if (response.status === 200) {
+                const authStore = useAuthStore()
+                authStore.setUser(response.data.user)
+                authStore.setToken(response.data.authorization.token)
+                await router.push({ name: 'home' })
+            } else {
+                error.value = true
+            }
+        } catch (err) {
+            console.log(err)
+        } finally {
+            /* empty */
+        }
+    }
+}
 </script>
-
 <template>
+    <ErrorPopup v-if="error" v-model="error" />
     <div class="bg-light_blue w-full rounded-2xl p-4 py-10 mb-2 relative flex flex-col justify-center items-center">
         <h2 class="text-2xl font-bold mb-2">Welcome Back</h2>
         <p class="mb-6">Login to Continue</p>
 
-        <form class="flex flex-col justify-center items-center w-full">
+        <form @submit.prevent="loginHandler" class="flex flex-col justify-center items-center w-full">
             <div class="mb-4 w-1/2">
-                <input
-                    type="text"
-                    placeholder="Enter Username"
-                    class="w-full p-2 rounded-full"/>
+                <input type="email" v-model="data.email" placeholder="Enter Email" class="w-full p-2 rounded-full" />
+                <div class="" v-for="error of v$.email.$errors" :key="error.$uid">
+                    <span class="error-msg">{{ error.$message }}</span>
+                </div>
             </div>
             <div class="mb-4 relative w-1/2">
-                <input
-                    :type="showPassword ? 'text' : 'password'"
-                    placeholder="Enter Password"
-                    class="w-full p-2 rounded-full"/>
-                <button
-                    @click.prevent="showPassword = !showPassword"
-                    class="absolute right-3 top-2.5">
-                    <i class="fa-regular"
-                       :class="showPassword ? 'fa-eye' : 'fa-eye-slash'"/>
+                <input :type="showPassword ? 'text' : 'password'" placeholder="Enter Password" v-model="data.password" class="w-full p-2 rounded-full" />
+                <button @click.prevent="showPassword = !showPassword" class="absolute right-3 top-2.5">
+                    <i class="fa-regular" :class="showPassword ? 'fa-eye' : 'fa-eye-slash'" />
                 </button>
+                <div class="input-errors" v-for="error of v$.password.$errors" :key="error.$uid">
+                    <span class="error-msg">{{ error.$message }}</span>
+                </div>
             </div>
-            <button class="w-1/4 bg-primary_dark text-black font-bold  rounded-full mb-4">
-                Login
-            </button>
+            <button type="submit" class="w-1/4 bg-primary_dark text-black font-bold rounded-full mb-4">Login</button>
         </form>
 
         <a href="#" class="text-sm text-center block mb-4">Forgot password</a>
@@ -51,19 +82,21 @@ const showPassword = ref(false);
         <div class="absolute -top-8 right-4">
             <div class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center">
                 <!-- Book icon placeholder -->
-                <Svg name="login3" w="300px" h="300px"/>
+                <Svg name="login3" w="300px" h="300px" />
             </div>
         </div>
         <div class="absolute bottom-12 left-10">
             <div class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center">
                 <!-- Book icon placeholder -->
-                <Svg name="login1" w="300px" h="300px"/>
+                <Svg name="login1" w="300px" h="300px" />
             </div>
         </div>
     </div>
-
 </template>
 
 <style scoped>
-
+.error-msg {
+    color: red;
+    font-weight: 500;
+}
 </style>
