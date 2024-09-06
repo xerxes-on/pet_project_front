@@ -1,18 +1,11 @@
 <script setup>
-import LoginForm from '@/components/loginComponents/LoginForm.vue'
 import Svg from '@/components/common/Svg.vue'
 import RegisterForm from '@/components/loginComponents/RegisterForm.vue'
-import Image from '@/components/common/Image.vue'
-import Logo from '@/components/common/Logo.vue'
 </script>
 
 <template>
-    <div
-        class="min-h-screen bg-primary flex flex-col items-center justify-center p-4"
-    >
-        <div
-            class="w-full max-w-screen-md flex flex-col items-center justify-center relative"
-        >
+    <div class="min-h-screen bg-primary flex flex-col items-center justify-center p-4">
+        <div class="w-full max-w-screen-md flex flex-col items-center justify-center relative">
             <!-- Logo -->
 
             <!-- Register Card -->
@@ -20,11 +13,7 @@ import Logo from '@/components/common/Logo.vue'
 
             <p class="text-center">
                 Already a user?
-                <router-link
-                    to="{{ {name: 'login'} }}"
-                    class="text-blue-600 font-bold"
-                    >Login</router-link
-                >
+                <router-link to="{{ {name: 'login'} }}" class="text-blue-600 font-bold">Login</router-link>
             </p>
         </div>
         <!-- Decorative elements -->

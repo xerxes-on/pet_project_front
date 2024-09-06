@@ -1,16 +1,11 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-<!--Header here-->
-
+    <!--Header here-->
 
     <slot></slot>
 
-<!--    Footer-->
+    <!--    Footer-->
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
