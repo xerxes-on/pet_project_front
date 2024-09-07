@@ -11,6 +11,9 @@ export default {
             dark_blue: '#265073',
             orange: '#EFEAD3',
             white: '#FFF',
+            yellow: '#FFD43B',
+            red: '#ff0000',
+            red500: '#ef4444',
         },
         extend: {
             fontFamily: {

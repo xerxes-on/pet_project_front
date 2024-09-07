@@ -19,12 +19,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div
-        class="absolute bg-red-50 border-s-4 border-red-500 p-4 dark:bg-red-800/30 w-1/2 rounded-xl top-5 right-2 z-30"
-        role="alert"
-        tabindex="-1"
-        aria-labelledby="hs-bordered-red-style-label"
-    >
+    <div class="absolute bg-red border-s-4 border-red500 p-4 w-1/2 rounded-xl top-5 right-2 z-30" role="alert" tabindex="-1" aria-labelledby="hs-bordered-red-style-label">
         <div class="flex">
             <div class="shrink-0">
                 <span

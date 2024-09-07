@@ -5,9 +5,7 @@ import { email, required, sameAs } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { useAuthStore } from '@/stores/auth.js'
 import authAPI from '@/api/auth.js'
-import Svg from '@/components/common/Svg.vue'
-
-
+import Svg from '@/components/common/Image.vue'
 
 const showPassword = ref(false)
 const router = useRouter()
@@ -106,13 +104,13 @@ const registerHandler = async () => {
         <div class="absolute -top-8 right-4">
             <div class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center">
                 <!-- Book icon placeholder -->
-                <Svg name="login3" w="300px" h="300px" />
+                <Svg name="login3" ext="svg" w="300px" h="300px" />
             </div>
         </div>
         <div class="absolute bottom-12 left-10">
             <div class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center">
                 <!-- Book icon placeholder -->
-                <Svg name="login1" w="300px" h="300px" />
+                <Svg name="login1" ext="svg" w="300px" h="300px" />
             </div>
         </div>
     </div>

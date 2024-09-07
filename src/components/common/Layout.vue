@@ -17,36 +17,36 @@ const hideMenu = () => {
 <template>
     <!--Header here-->
 
-    <header class="bg-primary p-8 flex items-center justify-between">
+    <header class="bg-primary p-8 pt-10 flex items-center justify-between">
         <!-- Logo Section -->
         <RouterLink :to="{ name: 'home' }">
             <div class="flex items-center space-x-2">
-                <img src="@/assets/images/logo.png" alt="Logo" class="w-10 h-10 rounded-full object-cover" />
-                <span class="text-xl font-bold">Logo Name</span>
+                <img src="@/assets/images/logo.png" alt="Logo" class="w-11 h-11 rounded-full object-cover" />
+                <span class="text-2xl font-bold">LetsRate</span>
             </div>
         </RouterLink>
         <!-- Navigation Section -->
         <nav class="flex space-x-8">
             <a href="#" class="relative group">
-                <RouterLink :to="{ name: 'home' }" class="hover:text-orange-500 font-semibold">Home</RouterLink>
+                <RouterLink :to="{ name: 'home' }" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Search </RouterLink>
                 <span class="absolute bottom-0 left-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
             </a>
 
             <!-- Dropdown for My Books -->
             <div class="relative group" @mouseenter="showMenu('books')" @mouseleave="hideMenu">
-                <a href="#" class="hover:text-orange-500 font-semibold">My Books</a>
+                <a href="#" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">My Books</a>
                 <DropDown v-if="activeMenu === 'books'" :items="['My Books 1', 'My Books 2']" />
             </div>
 
             <!-- Dropdown for Reviews -->
             <div class="relative group" @mouseenter="showMenu('reviews')" @mouseleave="hideMenu">
-                <a href="#" class="hover:text-orange-500 font-semibold">Reviews</a>
+                <a href="#" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Reviews</a>
                 <DropDown v-if="activeMenu === 'reviews'" :items="['Review 1', 'Review 2']" />
             </div>
 
             <!-- Dropdown for Community -->
             <div class="relative group" @mouseenter="showMenu('community')" @mouseleave="hideMenu">
-                <a href="#" class="hover:text-orange-500 font-semibold">Community</a>
+                <a href="#" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Community</a>
                 <DropDown v-if="activeMenu === 'community'" :items="['Community 1', 'Community 2']" />
             </div>
 
@@ -89,7 +89,7 @@ const hideMenu = () => {
             <!-- Contact Column -->
             <div>
                 <h3 class="text-lg font-bold mb-4">CONTACT</h3>
-                <div class="flex justify-center md:justify-start space-x-4">
+                <div class="flex justify-center md:justify-start space-x-4 text-3xl">
                     <a href="#" class="text-gray-700 hover:text-gray-900">
                         <i class="fab fa-facebook"></i>
                     </a>
@@ -115,27 +115,22 @@ const hideMenu = () => {
                 </div>
             </div>
             <!-- Bottom row: App Store Buttons -->
-            <div class="mt-10 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mt-10 flex flex md:flex-row justify-between items-center text-center md:text-left">
                 <!-- App Store Icons -->
-                <div class="flex space-x-4 mb-4 md:mb-0">
+                <div class="flex space-x-10 mb-4 md:mb-0">
                     <a href="#">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Apple_logo_black.svg" alt="App Store" class="h-12" />
+                        <i class="fa-brands fa-app-store text-7xl"></i>
                     </a>
                     <a href="#">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Google_Play_Icon.svg" alt="Google Play" class="h-12" />
+                        <i class="fa-brands fa-google-play text-7xl"></i>
                     </a>
-                </div>
-
-                <!-- Logo Placeholder -->
-                <div>
-                    <h2 class="text-2xl font-bold">Logo Name</h2>
                 </div>
             </div>
         </div>
 
         <!-- Copyright -->
         <div class="border-t border-gray-300 mt-8 pt-6 text-center text-gray-500">
-            <p>Copyright © YYYY - YYYY Company name. All rights reserved</p>
+            <p>Copyright © 2024 - 2024 Ventionteams. All rights reserved</p>
         </div>
     </footer>
 </template>

@@ -6,7 +6,7 @@
         <h2 class="text-xl font-bold mb-4">Currently Reading</h2>
         <div class="flex justify-between">
             <div class="flex">
-                <img src="@/assets/svgs/home5.svg" alt="Book Cover" class="w-48 rounded-lg object-cover mr-4" />
+                <img src="../../assets/images/home5.svg" alt="Book Cover" class="w-48 rounded-lg object-cover mr-4" />
             </div>
             <div class="w-1/2">
                 <h1 class="text-2xl font-bold p-4">Book Name</h1>

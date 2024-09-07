@@ -1,18 +1,19 @@
 import axios from 'axios'
+import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth.js'
 
 const client = axios.create({
     baseURL: 'http://bookrating.test/api',
 })
+
+const authStore = useAuthStore()
+const { token } = storeToRefs(authStore)
+
 client.interceptors.request.use(
     (config) => {
-        const authStore = useAuthStore()
-        const token = authStore.token
-
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`
+        if (token.value) {
+            config.headers.Authorization = `Bearer ${token.value}`
         }
-
         return config
     },
     (error) => {

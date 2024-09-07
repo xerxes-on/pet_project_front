@@ -17,7 +17,7 @@
 
             <!-- Favorite Book -->
             <div>
-                <img src="@/assets/svgs/home7.svg" alt="Favorite Book" class="w-32 h-48 rounded-lg object-cover" />
+                <img src="../../assets/images/home7.svg" alt="Favorite Book" class="w-32 h-48 rounded-lg object-cover" />
             </div>
         </div>
         <!-- Edit Profile Button -->

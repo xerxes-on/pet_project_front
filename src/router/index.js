@@ -24,6 +24,16 @@ const router = createRouter({
             name: 'profile',
             component: () => import('@/views/Profile.vue'),
         },
+        {
+            path: '/logout',
+            name: 'logout',
+            component: () => import('@/views/Logout.vue'),
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'notFound',
+            component: () => import('@/views/NotFound.vue'),
+        },
     ],
 })
 router.beforeEach((to, from, next) => {
@@ -32,7 +42,7 @@ router.beforeEach((to, from, next) => {
 
     if (!isAuthenticated && !['login', 'register'].includes(to.name)) {
         next({ name: 'login' })
-    } else if (isAuthenticated && to.name === 'login') {
+    } else if (isAuthenticated && ['login', 'register'].includes(to.name)) {
         next({ name: 'home' })
     } else {
         next()
