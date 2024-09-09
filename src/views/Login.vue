@@ -1,6 +1,6 @@
 <script setup>
 import Svg from '@/components/common/Image.vue'
-import LoginForm from '@/components/loginComponents/LoginForm.vue'
+import LoginForm from '@/components/Login/LoginForm.vue'
 </script>
 <template>
     <div class="min-h-screen bg-primary flex flex-col items-center justify-center p-4">
