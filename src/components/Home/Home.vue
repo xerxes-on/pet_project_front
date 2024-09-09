@@ -8,8 +8,6 @@ import Svg from '@/components/common/Image.vue'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
 import Suggestions from '@/components/Home/Suggestions.vue'
 
-const error = ref(false)
-
 // Goal setter for challenge
 const count = ref(1)
 watch(count, () => {
@@ -29,14 +27,12 @@ onMounted(async () => {
         if (response.status === 200) {
             homeStore.trending = response.data
         } else {
-            error.value = true
             errorMessage.value = 'There was an error with our servers please try again later'
         }
         if (suggestions.status === 200 && response_user.status === 200) {
             homeStore.suggestions = response.data
             profileStore.user = response_user.data
         } else {
-            error.value = true
             errorMessage.value = 'There was an error with our servers please try again later'
         }
     } catch (err) {
@@ -112,7 +108,7 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
 
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
                 <div class="relative overflow-hidden w-full">
-                    <Suggestions :homeStore="homeStore" />
+                    <Suggestions :homeStore="homeStore.suggestions" />
                 </div>
             </div>
             <!-- Right Sidebar -->
