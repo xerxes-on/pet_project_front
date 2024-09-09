@@ -18,12 +18,12 @@ watch(count, () => {
 
 const homeStore = useHomeStore()
 const profileStore = useProfileStore()
-const errorMessage = ref()
+const errorMessage = ref('')
 onMounted(async () => {
     try {
-        const response = await homeApi.trending()
-        const suggestions = await homeApi.suggested()
-        const response_user = await profileApi.profile()
+        const response = await homeApi.getTrendingBooks()
+        const suggestions = await homeApi.getSuggestedBooks()
+        const response_user = await profileApi.getProfileDetails()
         if (response.status === 200) {
             homeStore.trending = response.data
         } else {
@@ -87,7 +87,6 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
                     <a href="#" class="text-2xl"><i class="fa-brands fa-x-twitter"></i></a>
                 </div>
             </div>
-
             <!-- Main Content Area -->
             <div class="flex-1 h-fit">
                 <h2 class="text-xl font-bold mb-4 text-center">Trending Books</h2>
@@ -109,11 +108,9 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
 
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
                 <div class="relative overflow-hidden w-full">
-                    <!-- Scrolling container -->
-                    <Suggestions class="" />
+                    <Suggestions :homeStore="homeStore.suggestions" />
                 </div>
             </div>
-
             <!-- Right Sidebar -->
             <div class="w-1/4 bg-primary_dark h-fit rounded-lg shadow-md p-4 ml-4">
                 <h2 class="text-lg font-bold mb-2 text-center">WELCOME TO LetsRate</h2>
