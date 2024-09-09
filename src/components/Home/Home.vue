@@ -108,7 +108,7 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
 
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
                 <div class="relative overflow-hidden w-full">
-                    <Suggestions :homeStore="homeStore.suggestions" />
+                    <Suggestions :suggestedBooks="homeStore.suggestions" />
                 </div>
             </div>
             <!-- Right Sidebar -->
