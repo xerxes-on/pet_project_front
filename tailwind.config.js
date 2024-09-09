@@ -23,6 +23,7 @@ export default {
                 regular: 400,
                 semibold: 600,
                 bold: 700,
+                extralight: 200,
             },
         },
     },

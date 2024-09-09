@@ -6,7 +6,7 @@ import homeApi from '@/api/home.js'
 import profileApi from '@/api/profile.js'
 import Svg from '@/components/common/Image.vue'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
-import Suggestions from '@/components/HomeComponents/Suggestions.vue'
+import Suggestions from '@/components/Home/Suggestions.vue'
 
 const error = ref(false)
 
@@ -20,24 +20,24 @@ watch(count, () => {
 
 const homeStore = useHomeStore()
 const profileStore = useProfileStore()
-const error_message = ref()
+const errorMessage = ref('')
 onMounted(async () => {
     try {
-        const response = await homeApi.trending()
-        const suggestions = await homeApi.suggested()
-        const response_user = await profileApi.profile()
+        const response = await homeApi.getTrendingBooks()
+        const suggestions = await homeApi.getSuggestedBooks()
+        const response_user = await profileApi.getProfileDetails()
         if (response.status === 200) {
             homeStore.trending = response.data
         } else {
             error.value = true
-            error_message.value = 'There was an error with our servers please try again later'
+            errorMessage.value = 'There was an error with our servers please try again later'
         }
         if (suggestions.status === 200 && response_user.status === 200) {
             homeStore.suggestions = response.data
             profileStore.user = response_user.data
         } else {
             error.value = true
-            error_message.value = 'There was an error with our servers please try again later'
+            errorMessage.value = 'There was an error with our servers please try again later'
         }
     } catch (err) {
         console.log(err)
@@ -50,7 +50,7 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
 </script>
 
 <template>
-    <ErrorPopup v-if="error" v-model="error" message="{{error_message}}" />
+    <ErrorPopup v-if="!!errorMessage" v-model="errorMessage" :message="errorMessage" />
     <div class="p-4 pb-10 bg-primary">
         <!-- Main Content -->
         <div class="flex justify-around">
@@ -91,7 +91,6 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
                     <a href="#" class="text-2xl"><i class="fa-brands fa-x-twitter"></i></a>
                 </div>
             </div>
-
             <!-- Main Content Area -->
             <div class="flex-1 h-fit">
                 <h2 class="text-xl font-bold mb-4 text-center">Trending Books</h2>
@@ -113,11 +112,9 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
 
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
                 <div class="relative overflow-hidden w-full">
-                    <!-- Scrolling container -->
-                    <Suggestions class="" />
+                    <Suggestions :homeStore="homeStore" />
                 </div>
             </div>
-
             <!-- Right Sidebar -->
             <div class="w-1/4 bg-primary_dark h-fit rounded-lg shadow-md p-4 ml-4">
                 <h2 class="text-lg font-bold mb-2 text-center">WELCOME TO LetsRate</h2>

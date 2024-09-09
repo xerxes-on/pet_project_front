@@ -1,20 +1,20 @@
 import client from '@/api/client.js'
 
-const trending = () => {
+const getTrendingBooks = () => {
     return client
         .get('/trending_books')
         .then((response) => response)
         .catch((error) => error.response)
 }
 
-const suggested = () => {
+const getSuggestedBooks = () => {
     return client
         .get('/suggestions')
         .then((response) => response)
         .catch((error) => error.response)
 }
 const homeApi = {
-    trending,
-    suggested,
+    getTrendingBooks,
+    getSuggestedBooks,
 }
 export default homeApi

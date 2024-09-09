@@ -1,70 +1,58 @@
 <script setup>
-import { reactive, ref, toRef } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { email, required, sameAs } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import { useAuthStore } from '@/stores/auth.js'
+import { email, required } from '@vuelidate/validators'
 import authAPI from '@/api/auth.js'
+import { useAuthStore } from '@/stores/auth.js'
 import Svg from '@/components/common/Image.vue'
+import ErrorPopup from '@/components/common/ErrorPopup.vue'
 
-const showPassword = ref(false)
 const router = useRouter()
-
+const showPassword = ref(false)
 const data = reactive({
-    name: '',
     email: '',
     password: '',
-    confirm_password: '',
 })
-const passwordRef = toRef(data, 'password')
-
 const validations = {
-    name: { required },
-    email: { required, email },
     password: { required },
-    confirm_password: {
-        required,
-        sameAsPassword: sameAs(passwordRef),
-    },
+    email: { required, email },
 }
 const v$ = useVuelidate(validations, data)
-
-const registerHandler = async () => {
+const error = ref(false)
+const message = ref('Something went wrong')
+const loginHandler = async () => {
     const validation = await v$.value.$validate()
     if (validation) {
         try {
-            const response = await authAPI.register(data)
+            const response = await authAPI.login(data)
             if (response.status === 200) {
                 const authStore = useAuthStore()
                 authStore.setUser(response.data.user)
                 authStore.setToken(response.data.authorization.token)
                 await router.push({ name: 'home' })
             } else {
-                alert('Something went wrong try again')
+                error.value = true
+                message.value = response.data.message
             }
         } catch (err) {
             console.log(err)
         } finally {
+            /* empty */
         }
     }
 }
 </script>
-
 <template>
+    <ErrorPopup v-if="error" v-model="error" :message="message" />
     <div class="bg-light_blue w-full rounded-2xl p-4 py-10 mb-2 relative flex flex-col justify-center items-center">
-        <h2 class="text-2xl font-bold mb-2">Welcome to LetsRate</h2>
-        <p class="mb-6">Sign Up to Continue</p>
-        <!--Form-->
-        <form class="flex flex-col justify-center items-center w-full" @submit.prevent="registerHandler">
+        <h2 class="text-2xl font-bold mb-2">Welcome Back</h2>
+        <p class="mb-6">Login to Continue</p>
+
+        <form @submit.prevent="loginHandler" class="flex flex-col justify-center items-center w-full">
             <div class="mb-4 w-1/2">
-                <input type="text" placeholder="Enter Name" v-model="data.name" class="w-full p-2 rounded-full" />
-                <div class="input-errors" v-for="error of v$.name.$errors" :key="error.$uid">
-                    <span class="error-msg">{{ error.$message }}</span>
-                </div>
-            </div>
-            <div class="mb-4 w-1/2">
-                <input type="email" v-model="data.email" placeholder="Enter email" class="w-full p-2 rounded-full" />
-                <div class="input-errors" v-for="error of v$.email.$errors" :key="error.$uid">
+                <input type="email" v-model="data.email" placeholder="Enter Email" class="w-full p-2 rounded-full" />
+                <div class="" v-for="error of v$.email.$errors" :key="error.$uid">
                     <span class="error-msg">{{ error.$message }}</span>
                 </div>
             </div>
@@ -77,21 +65,13 @@ const registerHandler = async () => {
                     <span class="error-msg">{{ error.$message }}</span>
                 </div>
             </div>
-
-            <div class="mb-4 relative w-1/2">
-                <input :type="showPassword ? 'text' : 'password'" placeholder="Confirm Password" v-model="data.confirm_password" class="w-full p-2 rounded-full" />
-                <button class="absolute right-3 top-2.5">
-                    <i class="fa-regular" :class="showPassword ? 'fa-eye' : 'fa-eye-slash'" />
-                </button>
-                <div class="input-errors" v-for="error of v$.confirm_password.$errors" :key="error.$uid">
-                    <span class="error-msg">{{ error.$message }}</span>
-                </div>
-            </div>
-            <button class="w-1/4 bg-primary_dark text-black font-bold rounded-full mb-4">Register</button>
+            <button type="submit" class="w-1/4 bg-primary_dark text-black font-bold rounded-full mb-4">Login</button>
         </form>
 
+        <a href="#" class="text-sm text-center block mb-4">Forgot password</a>
+
         <div class="text-center mb-4">
-            <p class="text-sm mb-2">Sign up with</p>
+            <p class="text-sm mb-2">Login with</p>
             <div class="flex justify-center space-x-4">
                 <a href="#" class="text-2xl"><i class="fa-brands fa-google"></i></a>
                 <a href="#" class="text-2xl"><i class="fa-brands fa-facebook"></i></a>

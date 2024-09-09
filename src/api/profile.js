@@ -1,6 +1,6 @@
 import client from '@/api/client.js'
 
-const profile = () => {
+const getProfileDetails = () => {
     return client
         .post('/profile')
         .then((response) => response)
@@ -8,6 +8,6 @@ const profile = () => {
 }
 
 const profileApi = {
-    profile,
+    getProfileDetails,
 }
 export default profileApi

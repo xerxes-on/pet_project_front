@@ -16,16 +16,22 @@
 }
 
 @font-face {
-    font-family: 'Poppins';
+    font-family: 'Poppins B';
     src: url('/src/assets/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Poppins';
+    font-family: 'Poppins I';
     src: url('/src/assets/fonts/Poppins/Poppins-Italic.ttf') format('truetype');
     font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Poppins EL';
+    src: url('/src/assets/fonts/Poppins/Poppins-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
     font-style: italic;
 }
 .font-bold {

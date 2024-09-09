@@ -1,7 +1,7 @@
 <script setup>
-import LoginForm from '@/components/loginComponents/LoginForm.vue'
+import LoginForm from '@/components/Login/LoginForm.vue'
 import Svg from '@/components/common/Image.vue'
-import RegisterForm from '@/components/loginComponents/RegisterForm.vue'
+import RegisterForm from '@/components/Login/RegisterForm.vue'
 import Logo from '@/components/common/Logo.vue'
 </script>
 

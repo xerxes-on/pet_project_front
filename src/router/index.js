@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.js'
 
+function logout() {
+    const authStore = useAuthStore()
+    authStore.resetStore()
+}
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -27,7 +31,10 @@ const router = createRouter({
         {
             path: '/logout',
             name: 'logout',
-            component: () => import('@/views/Logout.vue'),
+            beforeEnter: (to, from, next) => {
+                logout()
+                next({ name: 'login' })
+            },
         },
         {
             path: '/:pathMatch(.*)*',
