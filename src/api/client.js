@@ -4,6 +4,9 @@ import { useAuthStore } from '@/stores/auth.js'
 
 const client = axios.create({
     baseURL: 'http://bookrating.test/api',
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    }
 })
 
 const authStore = useAuthStore()
