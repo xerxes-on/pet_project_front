@@ -31,7 +31,7 @@ const hideMenu = () => {
 
             <!-- Dropdown for My Books -->
             <div class="relative group" @mouseenter="showMenu('books')" @mouseleave="hideMenu">
-                <a href="#" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">My Books</a>
+                <RouterLink :to="{ name: 'myBooks' }" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Books</RouterLink>
                 <DropDown v-if="activeMenu === 'books'" :items="['My Books 1', 'My Books 2']" />
             </div>
 
