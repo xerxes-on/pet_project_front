@@ -14,6 +14,4 @@ const props = defineProps({
     </div>
 </template>
 
-<style scoped>
-/* Any specific styles */
-</style>
+<style scoped></style>
