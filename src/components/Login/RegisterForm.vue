@@ -3,9 +3,10 @@ import { reactive, ref, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 import { email, required, sameAs } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import authAPI from '@/api/auth.js'
 import { useAuthStore } from '@/stores/auth.js'
-import Svg from '@/components/common/Svg.vue'
+import authAPI from '@/api/auth.js'
+import Svg from '@/components/common/Image.vue'
+import ErrorPopup from '@/components/common/ErrorPopup.vue'
 
 const showPassword = ref(false)
 const router = useRouter()
@@ -24,11 +25,11 @@ const validations = {
     password: { required },
     confirm_password: {
         required,
-        sameAsPassword: sameAs(passwordRef), // Use the ref to make it reactive
+        sameAsPassword: sameAs(passwordRef),
     },
 }
 const v$ = useVuelidate(validations, data)
-
+const error = ref(false)
 const registerHandler = async () => {
     const validation = await v$.value.$validate()
     if (validation) {
@@ -41,16 +42,19 @@ const registerHandler = async () => {
                 await router.push({ name: 'home' })
             } else {
                 alert('Something went wrong try again')
+                error.value = true
             }
         } catch (err) {
             console.log(err)
         } finally {
+            //
         }
     }
 }
 </script>
 
 <template>
+    <ErrorPopup v-if="error" v-model="error" />
     <div class="bg-light_blue w-full rounded-2xl p-4 py-10 mb-2 relative flex flex-col justify-center items-center">
         <h2 class="text-2xl font-bold mb-2">Welcome to LetsRate</h2>
         <p class="mb-6">Sign Up to Continue</p>
@@ -104,13 +108,13 @@ const registerHandler = async () => {
         <div class="absolute -top-8 right-4">
             <div class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center">
                 <!-- Book icon placeholder -->
-                <Svg name="login3" w="300px" h="300px" />
+                <Svg name="login3" ext="svg" w="300px" h="300px" />
             </div>
         </div>
         <div class="absolute bottom-12 left-10">
             <div class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center">
                 <!-- Book icon placeholder -->
-                <Svg name="login1" w="300px" h="300px" />
+                <Svg name="login1" ext="svg" w="300px" h="300px" />
             </div>
         </div>
     </div>

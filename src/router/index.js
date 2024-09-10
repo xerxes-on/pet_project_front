@@ -19,6 +19,16 @@ const router = createRouter({
             name: 'home',
             component: () => import('@/views/Home.vue'),
         },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: () => import('@/views/Profile.vue'),
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'notFound',
+            component: () => import('@/views/NotFound.vue'),
+        },
     ],
 })
 router.beforeEach((to, from, next) => {

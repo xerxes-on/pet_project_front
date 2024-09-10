@@ -1,8 +1,10 @@
 <script setup>
-import { ref } from 'vue'
-
 const props = defineProps({
     name: {
+        type: String,
+        required: true,
+    },
+    ext: {
         type: String,
         required: true,
     },
@@ -16,19 +18,11 @@ const props = defineProps({
     },
 })
 
-const imageSrc = ref('')
-
-import(`@/assets/images/${props.name}`)
-    .then((module) => {
-        imageSrc.value = module.default
-    })
-    .catch((error) => {
-        console.error('Failed to load image:', error)
-    })
+const src = 'src/assets/images/' + props.name + '.' + props.ext
 </script>
 
 <template>
-    <img v-if="imageSrc" :src="imageSrc" :alt="name" :style="{ maxWidth: props.w, maxHeight: props.h }" />
+    <img :src="src" :alt="name" :style="{ maxWidth: props.w, maxHeight: props.h }" />
 </template>
 
 <style scoped></style>
