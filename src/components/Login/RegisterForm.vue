@@ -10,6 +10,11 @@ import ErrorPopup from '@/components/common/ErrorPopup.vue'
 
 const showPassword = ref(false)
 const router = useRouter()
+const v$ = useVuelidate(validations, data)
+const error = ref(false)
+const response = await authAPI.register(data)
+const passwordRef = toRef(data, 'password')
+const authStore = useAuthStore()
 
 const data = reactive({
     name: '',
@@ -17,8 +22,6 @@ const data = reactive({
     password: '',
     confirm_password: '',
 })
-const passwordRef = toRef(data, 'password')
-
 const validations = {
     name: { required },
     email: { required, email },
@@ -28,15 +31,11 @@ const validations = {
         sameAsPassword: sameAs(passwordRef),
     },
 }
-const v$ = useVuelidate(validations, data)
-const error = ref(false)
 const registerHandler = async () => {
     const validation = await v$.value.$validate()
     if (validation) {
         try {
-            const response = await authAPI.register(data)
             if (response.status === 200) {
-                const authStore = useAuthStore()
                 authStore.setUser(response.data.user)
                 authStore.setToken(response.data.authorization.token)
                 await router.push({ name: 'home' })

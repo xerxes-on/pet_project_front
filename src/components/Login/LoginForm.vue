@@ -9,7 +9,12 @@ import Svg from '@/components/common/Image.vue'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const showPassword = ref(false)
+const v$ = useVuelidate(validations, data)
+const error = ref(false)
+const message = ref('Something went wrong')
+
 const data = reactive({
     email: '',
     password: '',
@@ -18,16 +23,13 @@ const validations = {
     password: { required },
     email: { required, email },
 }
-const v$ = useVuelidate(validations, data)
-const error = ref(false)
-const message = ref('Something went wrong')
+
 const loginHandler = async () => {
     const validation = await v$.value.$validate()
     if (validation) {
         try {
             const response = await authAPI.login(data)
             if (response.status === 200) {
-                const authStore = useAuthStore()
                 authStore.setUser(response.data.user)
                 authStore.setToken(response.data.authorization.token)
                 await router.push({ name: 'home' })

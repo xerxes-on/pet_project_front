@@ -4,7 +4,7 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Li
 import { useProfileStore } from '@/stores/profile.js'
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const profileStore = useProfileStore()
-console.log(Object.values(profileStore.reviewCounts))
+// console.log(Object.values(profileStore.reviewCounts))
 const data = {
     labels: profileStore.reviewMonths,
     datasets: [
