@@ -6,8 +6,7 @@ import homeApi from '@/api/home.js'
 import profileApi from '@/api/profile.js'
 import Svg from '@/components/common/Image.vue'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
-import Suggestions from '@/components/HomeComponents/Suggestions.vue'
-
+import Suggestions from '@/components/Home/Suggestions.vue'
 
 // Goal setter for challenge
 const count = ref(1)
