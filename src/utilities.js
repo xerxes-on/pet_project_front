@@ -9,4 +9,10 @@ export function formatDate(date) {
         // second: 'numeric',
     })
 }
-
+export function removeNullKeys(obj) {
+    for (const key in obj) {
+        if (obj[key] === null) {
+            delete obj[key]
+        }
+    }
+}

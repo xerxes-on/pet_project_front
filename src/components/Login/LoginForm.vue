@@ -11,7 +11,6 @@ import ErrorPopup from '@/components/common/ErrorPopup.vue'
 const router = useRouter()
 const authStore = useAuthStore()
 const showPassword = ref(false)
-const v$ = useVuelidate(validations, data)
 const error = ref(false)
 const message = ref('Something went wrong')
 
@@ -23,6 +22,7 @@ const validations = {
     password: { required },
     email: { required, email },
 }
+const v$ = useVuelidate(validations, data)
 
 const loginHandler = async () => {
     const validation = await v$.value.$validate()

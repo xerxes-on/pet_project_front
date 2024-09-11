@@ -43,7 +43,6 @@ onMounted(async () => {
         /* empty */
     }
 })
-
 </script>
 
 <template>
@@ -110,7 +109,7 @@ onMounted(async () => {
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
                 <div class="relative overflow-hidden w-full">
                     <!-- Scrolling container -->
-                    <Suggestions :home-store="homeStore"/>
+                    <Suggestions :suggestions="homeStore.suggestions" />
                 </div>
             </div>
 

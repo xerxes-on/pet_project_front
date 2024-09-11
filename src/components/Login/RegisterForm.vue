@@ -10,7 +10,6 @@ import ErrorPopup from '@/components/common/ErrorPopup.vue'
 
 const showPassword = ref(false)
 const router = useRouter()
-const v$ = useVuelidate(validations, data)
 const error = ref(false)
 const response = await authAPI.register(data)
 const passwordRef = toRef(data, 'password')
@@ -31,6 +30,7 @@ const validations = {
         sameAsPassword: sameAs(passwordRef),
     },
 }
+const v$ = useVuelidate(validations, data)
 const registerHandler = async () => {
     const validation = await v$.value.$validate()
     if (validation) {
