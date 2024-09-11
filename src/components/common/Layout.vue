@@ -2,13 +2,10 @@
 import DropDown from '@/components/common/DropDown.vue'
 import { ref } from 'vue'
 
-// Active menu state
 const activeMenu = ref(null)
-
 const showMenu = (menu) => {
     activeMenu.value = menu
 }
-
 const hideMenu = () => {
     activeMenu.value = null
 }

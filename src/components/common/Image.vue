@@ -22,7 +22,7 @@ const src = 'src/assets/images/' + props.name + '.' + props.ext
 </script>
 
 <template>
-    <img :src="src" :alt="name" :style="{ maxWidth: props.w, maxHeight: props.h }" />
+    <img :alt="name" :src="src" :style="{ maxWidth: props.w, maxHeight: props.h }" />
 </template>
 
 <style scoped></style>

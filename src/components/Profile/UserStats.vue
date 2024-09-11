@@ -1,15 +1,17 @@
 <script setup>
 import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
+import { useProfileStore } from '@/stores/profile.js'
 
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+const profileStore = useProfileStore()
 const data = {
-    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    labels: profileStore.reviewMonths,
     datasets: [
         {
-            label: 'Hours read',
+            label: 'Number of Books Rated',
             backgroundColor: '#f87979',
-            data: [2, 3, 1, 0, 2, 3, 1],
+            data: profileStore.reviewCounts,
         },
     ],
 }
@@ -21,7 +23,7 @@ const options = {
     scales: {
         y: {
             beginAtZero: true,
-            max: 5,
+            max: Math.max(Object.values(profileStore.reviewCounts)),
             label: 'hours',
         },
     },
