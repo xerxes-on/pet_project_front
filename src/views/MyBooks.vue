@@ -1,11 +1,11 @@
 <script setup>
-import MyBooks from '@/components/Books/MyBooks.vue'
+import Books from '@/components/Books/Book.vue'
 import Layout from '@/components/common/Layout.vue'
 </script>
 
 <template>
     <Layout>
-        <MyBooks/>
+        <Books/>
     </Layout>
 </template>
 

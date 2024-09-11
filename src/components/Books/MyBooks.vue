@@ -40,24 +40,18 @@
                             {{ activity }}
                         </li>
                     </ul>
-                    <h2 class="text-xl font-semibold mt-8 mb-4">Tools</h2>
-                    <ul class="space-y-2">
-                        <li v-for="tool in tools" :key="tool" class="text-blue-700 hover:text-blue-900 cursor-pointer">
-                            {{ tool }}
-                        </li>
-                    </ul>
                 </div>
             </div>
             <div class="col-span-9">
-                <div class="grid grid-cols-3 gap-4">
+                <div class="grid grid-cols-4 gap-4">
                     <div
                         v-for="book in filteredBooks"
                         :key="book.id"
-                        class="bg-white rounded-lg overflow-hidden shadow-md"
+                        class="bg-white rounded-2xl overflow-hidden shadow-xl"
                     >
-                        <img :src="book.image" :alt="book.title" class="w-full h-72 object-cover" />
+                        <img :src="book.image" :alt="book.title" class=" h-56 object-cover" />
                         <div class="p-4">
-                            <h3 class="text-lg font-semibold">{{ book.title }}</h3>
+                            <h3 class="text-center font-semibold">{{ book.title }}</h3>
                         </div>
                     </div>
                     <div
@@ -72,7 +66,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { computed, ref } from 'vue'
+
 const books = ref([
     { id: 1, title: 'Reading Breaks Barriers', image: 'https://img.freepik.com/free-vector/reading-poster-vintage-design_23-2148920473.jpg' },
     { id: 2, title: 'Book and Ideas', image: 'https://img.freepik.com/free-vector/book-ideas-concept-art_23-2148897947.jpg' },
@@ -88,7 +83,6 @@ const shelves = ref([
     { name: 'Want to Read', count: 0 }
 ]);
 const activities = ref(['Draft', 'Highlights', 'Notes', 'Reading Challenge', 'Your Reading Stats']);
-const tools = ref(['Find Duplicates', 'Widgets', 'Import', 'Export']);
 const searchQuery = ref('');
 const filteredBooks = computed(() => {
     if (!searchQuery.value) return books.value;
