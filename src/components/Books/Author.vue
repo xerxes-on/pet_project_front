@@ -137,7 +137,11 @@
                     <div class="flex items-center justify-around w-1/2  space-x-4 mt-4">
                         <div class="flex items-center space-x-1">
                             <span class="mr-5">54 Likes</span>
-                            <HeartBtn/>
+                        <button @click="liked = !liked">
+                            <i class="fa-heart text-red text-xl"
+                                :class="[liked ? 'animate__heartBeat fa-solid':'fa-regular']"
+                            ></i>
+                        </button>
                         </div>
                         <div class="flex items-center space-x-1">
                             <i class="far fa-comment"></i>
@@ -152,33 +156,10 @@
 
 <script setup>
 import { ref } from 'vue'
-import HeartBtn from '@/components/Books/heart-btn.vue'
-
-// Data for the Community Reviews and Reader Reviews
-
-
+import 'animate.css'
 // Reactive properties
 const liked = ref(false);
-const likes = ref(54);
 
-// Function to toggle like
-function toggleLike() {
-    liked.value = !liked.value;
-    liked.value ? likes.value++ : likes.value--;
-}
-const reviews = ref([
-    {
-        id: 1,
-        userName: 'User Name',
-        userImage: 'https://randomuser.me/api/portraits/men/46.jpg',
-        date: 'Month DD, YYYY',
-        rating: 4.5,
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        likes: 54,
-        comments: 12,
-    },
-    // Add more reviews as needed
-])
 const rates = ref([
     { star: 5, width: '80%', percent: '80%' },
     { star: 4, width: '60%', percent: '60%' },
@@ -190,33 +171,4 @@ const rates = ref([
 </script>
 
 <style scoped>
-div {
-    border: 1px solid red;
-}
-@keyframes burst {
-    0% {
-        transform: scale(0.5);
-        opacity: 0.6;
-    }
-    50% {
-        transform: scale(1.5);
-        opacity: 0.3;
-    }
-    100% {
-        transform: scale(2.0);
-        opacity: 0;
-    }
-}
-
-/* Burst animation */
-.burst-animation {
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border-radius: 50%;
-    position: absolute;
-    background-color: rgba(0, 123, 255, 0.5);
-    animation: burst 0.5s ease-out forwards;
-}
 </style>

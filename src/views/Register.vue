@@ -1,8 +1,6 @@
 <script setup>
-import LoginForm from '@/components/Login/LoginForm.vue'
-import Svg from '@/components/common/Image.vue'
-import RegisterForm from '@/components/Login/RegisterForm.vue'
-import Logo from '@/components/common/Logo.vue'
+import Svg from '@/components/common/Svg.vue'
+import RegisterForm from '@/components/Lohin/RegisterForm.vue'
 </script>
 
 <template>
@@ -21,11 +19,11 @@ import Logo from '@/components/common/Logo.vue'
         <!-- Decorative elements -->
         <div class="absolute bottom-0 left-0">
             <!-- Stack of books placeholder -->
-            <Svg name="login4" ext="svg" w="350px" h="350px" />
+            <Svg name="login4" w="350px" h="350px" />
         </div>
         <div class="absolute bottom-4 right-4">
             <!-- Person reading placeholder -->
-            <Svg name="login2" ext="svg" w="450px" h="450px" />
+            <Svg name="login2" w="450px" h="450px" />
         </div>
     </div>
 </template>

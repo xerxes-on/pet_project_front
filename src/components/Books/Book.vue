@@ -1,13 +1,35 @@
+<script setup>
+import { onMounted, ref } from 'vue'
+import Author from '@/components/Books/Author.vue'
+import bookApi from '@/api/book.js'
+import { useBookStore } from '@/stores/book.js'
+import ErrorPopup from '@/components/common/ErrorPopup.vue'
+
+
+const bookStore = useBookStore()
+const errorMessage = ref()
+onMounted(async ()=>{
+    try {
+        const bookResponse = await bookApi.getBookDetails(1)
+        console.log(bookResponse.data)
+        if(bookResponse.status ===200){
+            bookStore.book = bookResponse.data
+        }else{
+            errorMessage.value = bookResponse.data.message
+        }
+    }catch(e){
+        console.log(e)
+    }
+})
+</script>
 <template>
+    <ErrorPopup v-if="!!errorMessage" v-model="errorMessage" :message="errorMessage" />
     <div class="min-h-screen p-6 bg-primary text-gray-900">
-        <!-- Header Section -->
         <div class="grid grid-cols-12 gap-8">
-            <!-- Left Column (Book Cover and Actions) -->
             <div class="col-span-4">
-                <!-- Book Cover -->
                 <div class=" p-4 rounded-2xl shadow-md">
                     <img
-                        src="https://img.freepik.com/free-vector/reading-poster-vintage-design_23-2148920473.jpg"
+                        :src="bookStore.book.image"
                         alt="Book Cover"
                         class="rounded-lg w-full h-auto"
                     />
@@ -27,20 +49,19 @@
 
             <!-- Right Column (Book Details) -->
             <div class="col-span-8  p-8 rounded-2xl shadow-md">
-                <h1 class="text-3xl font-bold mb-2">Book Name</h1>
-                <h2 class="text-xl  mb-4">Author Name</h2>
+                <h1 class="text-3xl font-bold mb-2">{{ bookStore.book.title }}</h1>
+                <h2 class="text-xl  mb-4">{{bookStore.book.author.name}}</h2>
 
                 <!-- Ratings and Reviews -->
                 <div class="flex items-center mb-4">
                     <span class="text-yellow text-xl"><i class="fa-solid fa-star"></i></span>
-                    <span class="ml-2 text-lg">4.5</span>
-                    <span class="ml-4 text-gray-500 opacity-50">(654 Ratings • 756 Reviews)</span>
+                    <span class="ml-2 text-lg">{{ bookStore.book.rating}}</span>
+                    <span class="ml-4 text-gray-500 opacity-50">({{ bookStore.book.ratings_count }} Ratings • {{bookStore.book.reviews.length }} Reviews)</span>
                 </div>
 
                 <!-- Book Description -->
                 <p class="text-gray-700 mb-6">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta
-                    venenatis turpis in non. Vivamus quis magna vel leo dignissim luctus.
+                    {{ bookStore.book.}}
                     <br>
                     <br>
 
@@ -84,48 +105,7 @@
 
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import Author from '@/components/Books/Author.vue'
 
-// Book data
-const genres = ref([
-    'Fiction', 'Mystery', 'Adventure', 'Fantasy', 'Drama', 'Thriller', 'Historical',
-])
-
-const moreEditions = ref([
-    {
-        id: 1,
-        title: 'Hardcover Edition',
-        image: 'https://img.freepik.com/free-vector/reading-poster-vintage-design_23-2148920473.jpg',
-        year: '2022',
-    },
-    {
-        id: 2,
-        title: 'Paperback Edition',
-        image: 'https://img.freepik.com/free-vector/reading-poster-vintage-design_23-2148920473.jpg',
-        year: '2021',
-    },
-    {
-        id: 3,
-        title: 'eBook Edition',
-        image: 'https://img.freepik.com/free-vector/reading-poster-vintage-design_23-2148920473.jpg',
-        year: '2020',
-    },
-    {
-        id: 4,
-        title: 'Kindle Edition',
-        image: 'https://img.freepik.com/free-vector/reading-poster-vintage-design_23-2148920473.jpg',
-        year: '2019',
-    },
-    {
-        id: 5,
-        title: 'Audiobook Edition',
-        image: 'https://img.freepik.com/free-vector/reading-poster-vintage-design_23-2148920473.jpg',
-        year: '2018',
-    },
-])
-</script>
 
 <style scoped>
 </style>
