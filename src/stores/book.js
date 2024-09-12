@@ -5,10 +5,13 @@ export const useBookStore = defineStore(
     'bookStore',
     () => {
         const book = ref(null)
-
+        const resetStore = () => {
+            book.value = null
+        }
 
         return {
-            book
+            book,
+            resetStore,
         }
     },
     { persist: true }
