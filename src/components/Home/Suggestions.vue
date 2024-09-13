@@ -1,6 +1,7 @@
 <script setup>
 import { VueperSlide, VueperSlides } from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
+import { useHomeStore } from '@/stores/home.js'
 
 const homeStore = useHomeStore()
 </script>

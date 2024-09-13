@@ -21,7 +21,6 @@ const data = ref({
     gender: null,
     profile_picture: null,
 })
-console.log(user)
 function handleFileChange(event) {
     data.value.profile_picture = event.target.files[0]
 }
@@ -40,7 +39,6 @@ async function updateProfile() {
     try {
         removeNullKeys(data.value)
         const response = await editProfileApi.edit(data.value)
-        console.log(response.data)
         if (response.status === 200) {
             profileStore.user = response.data.user
             isFlipped.value = false

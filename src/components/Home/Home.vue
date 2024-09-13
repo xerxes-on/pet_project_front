@@ -21,9 +21,9 @@ const profileStore = useProfileStore()
 const errorMessage = ref()
 onMounted(async () => {
     try {
-        const response = await homeApi.trending()
-        const suggestions = await homeApi.suggested()
-        const response_user = await profileApi.profile()
+        const response = await homeApi.getSuggestedBooks()
+        const suggestions = await homeApi.getTrendingBooks()
+        const response_user = await profileApi.getProfileDetails()
         if (response.status === 200) {
             homeStore.trending = response.data
         } else {
@@ -41,6 +41,7 @@ onMounted(async () => {
         /* empty */
     }
 })
+console.log(homeStore.trending)
 // Main content cards
 const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
 </script>
@@ -97,7 +98,6 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
                         <div :style="{ backgroundImage: `url(${book.images})` }" class="absolute inset-0 bg-cover rounded-xl blur-sm bg-center"></div>
                         <div class="relative rounded-3xl z-5 flex flex-col justify-center items-center p-2 h-full bg-white opacity-70">
                             <h1 class="text-center font-bold">{{ book.title }}</h1>
-                            <h3 class="mt-4 text-center">{{ book.author.name }}</h3>
                             <div class="text-lg text-center">
                                 <span v-for="n in 5" :key="n">
                                     <i :class="['text-yellow', n <= book.rating / 2 ? 'fa-solid fa-star' : 'fa-regular fa-star']"></i>
