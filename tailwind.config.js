@@ -16,7 +16,7 @@ export default {
             red500: '#ef4444',
             green: '#26A541',
             orange_dark: '#FF9F00',
-            gray:'#D9D9D9'
+            gray: '#D9D9D9',
         },
         extend: {
             fontFamily: {

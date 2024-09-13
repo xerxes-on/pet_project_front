@@ -7,6 +7,7 @@ import profileApi from '@/api/profile.js'
 import Svg from '@/components/common/Image.vue'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
 import Suggestions from '@/components/Home/Suggestions.vue'
+import { useMainStore } from '@/stores/main.js'
 
 // Goal setter for challenge
 const count = ref(1)
@@ -18,9 +19,11 @@ watch(count, () => {
 
 const homeStore = useHomeStore()
 const profileStore = useProfileStore()
+const mainStore = useMainStore()
 const errorMessage = ref('')
 onMounted(async () => {
     try {
+        mainStore.loading = true
         const suggestions = await homeApi.getSuggestedBooks()
         const trending = await homeApi.getTrendingBooks()
         const response_user = await profileApi.getProfileDetails()
@@ -35,7 +38,7 @@ onMounted(async () => {
     } catch (err) {
         console.log(err)
     } finally {
-        /* empty */
+        mainStore.loading = false
     }
 })
 const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']

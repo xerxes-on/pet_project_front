@@ -5,10 +5,8 @@ import Layout from '@/components/common/Layout.vue'
 
 <template>
     <Layout>
-        <Books/>
+        <Books />
     </Layout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

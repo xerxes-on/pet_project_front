@@ -588,10 +588,6 @@ video {
   }
 }
 
-.fixed {
-  position: fixed;
-}
-
 .absolute {
   position: absolute;
 }
@@ -1597,7 +1593,7 @@ video {
 @font-face {
   font-family: 'Tangerine';
 
-  src: url("@/assets/fonts/Tangerine/Tangerine-Bold.ttf") format('truetype');
+  src: url('@/assets/fonts/Tangerine/Tangerine-Bold.ttf') format('truetype');
 
   font-weight: 800;
 
@@ -1607,7 +1603,7 @@ video {
 @font-face {
   font-family: 'Poppins B';
 
-  src: url("@/assets/fonts/Poppins/Poppins-Bold.ttf") format('truetype');
+  src: url('@/assets/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
 
   font-weight: 600;
 
@@ -1617,7 +1613,7 @@ video {
 @font-face {
   font-family: 'Poppins';
 
-  src: url("@/assets/fonts/Poppins/Poppins-Regular.ttf") format('truetype');
+  src: url('@/assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
 
   font-weight: 400;
 
@@ -1627,7 +1623,7 @@ video {
 @font-face {
   font-family: 'Poppins SB';
 
-  src: url("@/assets/fonts/Poppins/Poppins-SemiBold.ttf") format('truetype');
+  src: url('@/assets/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
 
   font-weight: 500;
 
@@ -1637,7 +1633,7 @@ video {
 @font-face {
   font-family: 'Poppins EL';
 
-  src: url("@/assets/fonts/Poppins/Poppins-ExtraLight.ttf") format('truetype');
+  src: url('@/assets/fonts/Poppins/Poppins-ExtraLight.ttf') format('truetype');
 
   font-weight: 200;
 

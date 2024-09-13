@@ -1,8 +1,6 @@
 <script setup>
-
 import Layout from '@/components/common/Layout.vue'
 import Search from '@/components/Search/Search.vue'
-
 </script>
 
 <template>
@@ -11,6 +9,4 @@ import Search from '@/components/Search/Search.vue'
     </Layout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

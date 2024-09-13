@@ -6,12 +6,15 @@ import { useBookStore } from '@/stores/book.js'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
 import Reviews from '@/components/Books/Reviews.vue'
 import Author from '@/components/Books/Author.vue'
+import { useMainStore } from '@/stores/main.js'
 
 const bookStore = useBookStore()
+const mainStore = useMainStore()
 const errorMessage = ref('')
 
 onMounted(async () => {
     try {
+        mainStore.loading = true
         const bookResponse = await bookApi.getBookDetails(1)
         const bookReviews = await bookApi.getBookReviews(1)
         if (bookResponse.status === 200) {
@@ -22,6 +25,8 @@ onMounted(async () => {
         }
     } catch (e) {
         console.log(e)
+    } finally {
+        mainStore.loading = false
     }
 })
 const book = computed(() => bookStore.book)
