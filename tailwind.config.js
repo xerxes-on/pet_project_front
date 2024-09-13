@@ -14,10 +14,14 @@ export default {
             yellow: '#FFD43B',
             red: '#ff0000',
             red500: '#ef4444',
+            green: '#26A541',
+            orange_dark: '#FF9F00',
+            gray: '#D9D9D9',
         },
         extend: {
             fontFamily: {
                 poppins: ['Poppins', 'sans-serif'],
+                tangerine: ['Tangerine', 'cursive'],
             },
             fontWeight: {
                 regular: 400,

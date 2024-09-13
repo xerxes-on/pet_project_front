@@ -8,6 +8,7 @@ const client = axios.create({
         'Content-Type': 'multipart/form-data',
     },
 })
+
 const authStore = useAuthStore()
 const { token } = storeToRefs(authStore)
 
@@ -22,4 +23,5 @@ client.interceptors.request.use(
         return Promise.reject(error)
     }
 )
+
 export default client

@@ -25,13 +25,13 @@ const hideMenu = () => {
         <!-- Navigation Section -->
         <nav class="flex space-x-8">
             <a href="#" class="relative group">
-                <RouterLink :to="{ name: 'home' }" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Search </RouterLink>
+                <RouterLink :to="{ name: 'search' }" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Search </RouterLink>
                 <span class="absolute bottom-0 left-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
             </a>
 
             <!-- Dropdown for My Books -->
             <div class="relative group" @mouseenter="showMenu('books')" @mouseleave="hideMenu">
-                <a href="#" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">My Books</a>
+                <RouterLink :to="{ name: 'myBooks' }" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Books</RouterLink>
                 <DropDown v-if="activeMenu === 'books'" :items="['My Books 1', 'My Books 2']" />
             </div>
 
@@ -48,7 +48,7 @@ const hideMenu = () => {
             </div>
 
             <RouterLink :to="{ name: 'profile' }">
-                <img src="@/assets/images/logo.png" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
+                <img alt="Profile" class="w-10 h-10 rounded-full object-cover" src="@/assets/images/logo.png" />
             </RouterLink>
         </nav>
     </header>

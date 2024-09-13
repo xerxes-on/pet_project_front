@@ -7,42 +7,41 @@ import profileApi from '@/api/profile.js'
 import Svg from '@/components/common/Image.vue'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
 import Suggestions from '@/components/Home/Suggestions.vue'
+import { useMainStore } from '@/stores/main.js'
 
-const homeStore = useHomeStore()
-const profileStore = useProfileStore()
-const errorMessage = ref()
+// Goal setter for challenge
 const count = ref(1)
-const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
-
 watch(count, () => {
     if (count.value < 1) {
         count.value = 1
     }
 })
 
+const homeStore = useHomeStore()
+const profileStore = useProfileStore()
+const mainStore = useMainStore()
+const errorMessage = ref('')
 onMounted(async () => {
     try {
-        const response = await homeApi.getTrendingBooks()
+        mainStore.loading = true
         const suggestions = await homeApi.getSuggestedBooks()
+        const trending = await homeApi.getTrendingBooks()
         const response_user = await profileApi.getProfileDetails()
-
-        if (response.status === 200) {
-            homeStore.trending = response.data
-        } else {
-            errorMessage.value = 'There was an error with our servers please try again later'
-        }
-        if (suggestions.status === 200 && response_user.status === 200) {
-            homeStore.suggestions = response.data
+        console.log(trending)
+        if (response_user.status === 200 && suggestions.status === 200 && trending.status === 200) {
+            homeStore.suggestions = suggestions.data
             profileStore.user = response_user.data
+            homeStore.trending = trending.data
         } else {
             errorMessage.value = 'There was an error with our servers please try again later'
         }
     } catch (err) {
         console.log(err)
     } finally {
-        /* empty */
+        mainStore.loading = false
     }
 })
+const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
 </script>
 
 <template>
@@ -94,7 +93,7 @@ onMounted(async () => {
                 <!--Books-->
                 <div class="grid grid-cols-2 gap-3 p-2 lg:grid-cols-3">
                     <div v-for="(book, index) in homeStore.trending" :key="index" class="relative p-3 rounded-xl shadow-lg" :class="classes[index]">
-                        <div :style="{ backgroundImage: `url(${book.images})` }" class="absolute inset-0 bg-cover rounded-xl blur-sm bg-center"></div>
+                        <div :style="{ backgroundImage: `url(${book.image})` }" class="absolute inset-0 bg-cover rounded-xl blur-sm bg-center"></div>
                         <div class="relative rounded-3xl z-5 flex flex-col justify-center items-center p-2 h-full bg-white opacity-70">
                             <h1 class="text-center font-bold">{{ book.title }}</h1>
                             <div class="text-lg text-center">
@@ -109,10 +108,10 @@ onMounted(async () => {
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
                 <div class="relative overflow-hidden w-full">
                     <!-- Scrolling container -->
-                    <Suggestions :suggestions="homeStore.suggestions" />
+                    <Suggestions :suggested-books="homeStore.suggestions" />
                 </div>
             </div>
-
+            ]
             <!-- Right Sidebar -->
             <div class="w-1/4 bg-primary_dark h-fit rounded-lg shadow-md p-4 ml-4">
                 <h2 class="text-lg font-bold mb-2 text-center">WELCOME TO LetsRate</h2>

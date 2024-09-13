@@ -1,17 +1,20 @@
 <script setup>
-import { computed, reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { useProfileStore } from '@/stores/profile.js'
+import { formatDate } from 'compatx'
 import editProfileApi from '@/api/editProfile.js'
-import { formatDate, removeNullKeys } from '@/utilities.js'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
 
 const profileStore = useProfileStore()
-const user = computed(() => profileStore.user.user)
-const profile_pic = computed(() => (user.value.profile_picture !== null ? user.value.profile_picture : 'src/assets/images/cat.jpg'))
-const isFlipped = ref(false)
-const errorMessage = ref('')
+const user = profileStore.user.user
+const profile_pic = user.profile_picture !== null ? user.profile_picture : 'src/assets/images/cat.jpg'
 
-const data = reactive({
+const isFlipped = ref(false)
+
+const flipCard = () => {
+    isFlipped.value = !isFlipped.value
+}
+const data = ref({
     name: null,
     username: null,
     date_of_birth: null,
@@ -19,11 +22,22 @@ const data = reactive({
     profile_picture: null,
 })
 function handleFileChange(event) {
-    data.profile_picture = event.target.files[0]
+    data.value.profile_picture = event.target.files[0]
 }
+
+function removeNullKeys(obj) {
+    for (const key in obj) {
+        if (obj[key] === null) {
+            delete obj[key]
+        }
+    }
+}
+
+const errorMessage = ref('')
+
 async function updateProfile() {
     try {
-        removeNullKeys(data)
+        removeNullKeys(data.value)
         const response = await editProfileApi.edit(data.value)
         if (response.status === 200) {
             profileStore.user = response.data.user
@@ -39,9 +53,6 @@ async function updateProfile() {
     } finally {
         //
     }
-}
-const flipCard = () => {
-    isFlipped.value = !isFlipped.value
 }
 </script>
 
@@ -64,30 +75,30 @@ const flipCard = () => {
                         </div>
                     </div>
                     <div class="p-2">
-                        <h1>{{ user.name }}</h1>
-                        <span>{{ user.username }}</span>
+                        <h1 class="font-bold text-3xl">{{ user.name }}</h1>
+                        <span>@{{ user.username }}</span>
                         <div class="flex justify-between p-4 w-full">
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-                                <h2 class="font-bold text-2xl">100</h2>
+                                <h2 class="font-bold text-2xl">{{ user.followers.length }}</h2>
                                 <p class="text-dark_blue">Followers</p>
                             </div>
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-                                <h2 class="font-bold text-2xl">100</h2>
-                                <p class="text-dark_blue">Followers</p>
+                                <h2 class="font-bold text-2xl">{{ user.following.length }}</h2>
+                                <p class="text-dark_blue">Following</p>
                             </div>
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-                                <h2 class="font-bold text-2xl">100</h2>
-                                <p class="text-dark_blue">Followers</p>
+                                <h2 class="font-bold text-2xl">{{ user.reviews.length }}</h2>
+                                <p class="text-dark_blue">Rated books</p>
                             </div>
                         </div>
                         <h1 class="text-2xl font-extra-light">Details</h1>
 
                         <p class="text-dark_blue inline">Joined in:</p>
-                        <span class="ml-4">{{ formatDate(user.created_at) }}</span>
+                        <span class="mr-4">{{ formatDate(user.created_at) }}</span>
                         <br />
                         <p class="mt-2 text-gray-600">
                             Favorite <span class="text-dark_blue text-lg">Genres</span>: <br />
-                            <span v-for="(category, index) in user.genres" :key="index">{{ category.category_name }}</span>
+                            <span v-for="(genre, index) in user.liked_genres" :key="index">{{ genre.category_name }}</span>
                         </p>
                         <h1 class="text-2xl mt-2">My BookShelves</h1>
                         <div class="flex justify-between">

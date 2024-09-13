@@ -7,7 +7,6 @@ export const useAuthStore = defineStore(
         const user = ref(null)
         const token = ref('')
 
-        // call it on log out
         const resetStore = () => {
             user.value = null
             token.value = ''
@@ -20,7 +19,6 @@ export const useAuthStore = defineStore(
         const setToken = (newToken) => {
             token.value = newToken
         }
-
         return {
             user,
             token,
@@ -30,5 +28,6 @@ export const useAuthStore = defineStore(
             isAuthorized,
         }
     },
+
     { persist: true }
 )
