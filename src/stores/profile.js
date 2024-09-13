@@ -4,38 +4,38 @@ import { computed, ref } from 'vue'
 export const useProfileStore = defineStore(
     'profileStore',
     () => {
-        const user = ref(null)
+        const user = ref(null);
 
         const books_status = {
             finished: computed(() => user.value?.user?.books?.filter((book) => book.pivot.status === 0) || []),
             reading: computed(() => user.value?.user?.books?.filter((book) => book.pivot.status === 1) || []),
             wantToRead: computed(() => user.value?.user?.books?.filter((book) => book.pivot.status === 2) || []),
-        }
+        };
 
         const reviewCounts = computed(() => {
-            const counts = {}
+            const counts = {};
             user.value?.user?.reviews?.forEach((review) => {
-                const date = new Date(review.created_at)
-                const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+                const date = new Date(review.created_at);
+                const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
 
                 if (!counts[monthYear]) {
-                    counts[monthYear] = 0
+                    counts[monthYear] = 0;
                 }
-                counts[monthYear]++
-            })
-            return counts
-        })
+                counts[monthYear]++;
+            });
+            return counts;
+        });
 
-        const reviewMonths = computed(() => Object.keys(reviewCounts.value)) // Array of months
-        const reviewValues = computed(() => Object.values(reviewCounts.value)) // Array of counts
+        const reviewMonths = computed(() => Object.keys(reviewCounts.value)); // Array of months
+        const reviewValues = computed(() => Object.values(reviewCounts.value)); // Array of counts
 
         return {
             user,
             books_status,
             reviewCounts,
             reviewMonths,
-            reviewValues,
-        }
+            reviewValues
+        };
     },
     { persist: true }
-)
+);

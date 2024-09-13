@@ -5,9 +5,10 @@ import { useAuthStore } from '@/stores/auth.js'
 const client = axios.create({
     baseURL: 'http://bookrating.test/api',
     headers: {
-        'Content-Type': 'multipart/form-data',
-    },
+        'Content-Type': 'multipart/form-data'
+    }
 })
+
 const authStore = useAuthStore()
 const { token } = storeToRefs(authStore)
 
@@ -22,4 +23,5 @@ client.interceptors.request.use(
         return Promise.reject(error)
     }
 )
+
 export default client

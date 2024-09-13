@@ -2,7 +2,9 @@
 import { ref } from 'vue'
 import { useProfileStore } from '@/stores/profile.js'
 import { formatDate } from 'compatx'
-import Input from '@/components/common/Input.vue'
+import editProfileApi from '@/api/editProfile.js'
+import ErrorPopup from '@/components/common/ErrorPopup.vue'
+
 
 const profileStore = useProfileStore()
 const user = profileStore.user.user
@@ -13,9 +15,53 @@ const isFlipped = ref(false)
 const flipCard = () => {
     isFlipped.value = !isFlipped.value
 }
+const data = ref({
+    name: null,
+    username: null,
+    date_of_birth: null,
+    gender: null,
+    profile_picture: null,
+})
+console.log(user)
+function handleFileChange(event) {
+    data.value.profile_picture = event.target.files[0]
+}
+
+function removeNullKeys(obj) {
+    for (const key in obj) {
+        if (obj[key] === null) {
+            delete obj[key]
+        }
+    }
+}
+
+const errorMessage = ref('')
+
+async function updateProfile() {
+    try {
+        removeNullKeys(data.value)
+        const response = await editProfileApi.edit(data.value)
+        console.log(response.data)
+        if (response.status === 200) {
+            profileStore.user = response.data.user
+            isFlipped.value = false
+        } else {
+            const errors = Object.values(response.data.errors)
+            errors.forEach(message => {
+                errorMessage.value += message
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    } finally {
+        //
+    }
+}
+
 </script>
 
 <template>
+    <ErrorPopup v-if="!!errorMessage" v-model="errorMessage" :message="errorMessage" />
     <section class="mb-6 h-[32rem]">
         <div :class="['flip-card-inner', { flipped: isFlipped }]">
             <!-- Front Side (Profile Header) -->
@@ -62,16 +108,16 @@ const flipCard = () => {
                         <div class="flex justify-between">
                             <div class="bg-dark_blue px-8 py-2 m-4 rounded-xl shadow-2xl text-white flex flex-col justify-center items-center">
                                 <p class="">Read</p>
-                                <p class="text-xl">100</p>
+                                <p class="text-xl">{{profileStore.books_status.finished.length}}</p>
                             </div>
                             <div class="bg-dark_blue py-2 px-4 m-4 rounded-xl shadow-2xl text-white flex flex-col justify-center items-center">
                                 <p class="">Reading</p>
 
-                                <p class="text-xl">100</p>
+                                <p class="text-xl">{{profileStore.books_status.reading.length}}</p>
                             </div>
                             <div class="bg-dark_blue py-2 px-4 m-4 rounded-xl shadow-2xl text-white flex flex-col justify-center items-center">
                                 <p class="">Want to read</p>
-                                <p class="text-xl">100</p>
+                                <p class="text-xl">{{ profileStore.books_status.wantToRead.length }}</p>
                             </div>
                         </div>
                     </div>
@@ -86,25 +132,54 @@ const flipCard = () => {
             <!-- Back Side (Edit Form) -->
             <div class="flip-card-back bg-orange p-6 rounded-2xl shadow-md w-96 h-fit">
                 <h2 class="text-xl font-bold mb-4">Edit Profile</h2>
-                <form>
+                <form @submit.prevent="updateProfile">
                     <div class="flex justify-between">
                         <div class="p-3">
-                            <Input label="Full name" name="name" />
-                            <Input label="Username" name="username" />
-                            <Input label="Date of Birth" type="date" name="date_of_birth" />
-                            <Input label="Email" type="email" name="email" />
-                            <label for="gender" class="m-3">Gender:</label>
-                            <select name="gender" class="bg-primary">
-                                <option value="2">Prefer not to say</option>
-                                <option value="1">Male</option>
-                                <option value="0">Female</option>
-                            </select>
+                            <div>
+                                <label for="Full name">Full Name</label>
+                                <input
+                                    v-model="data.name"
+                                    type="text"
+                                    class="rounded-2xl p-2 bg-primary m-5  border-dark_blue">
+                            </div>
+                            <div>
+
+                                <label for="username">Username</label>
+                                <input
+                                    v-model="data.username"
+                                    type="text"
+                                    class="rounded-2xl p-2 bg-primary m-5  border-dark_blue">
+                            </div>
+                            <div>
+
+                                <label for="dob">Date of Birth</label>
+                                <input
+                                    v-model="data.date_of_birth"
+                                    type="date"
+                                    class="rounded-2xl p-2 bg-primary m-5  border-dark_blue">
+                            </div>
+                            <div>
+                                <label for="gender">Gender</label>
+                                <select v-model="data.gender" class="rounded-2xl p-2 bg-primary m-5  border-dark_blue">
+                                    <option value="2">Prefer not to say</option>
+                                    <option value="1">Male</option>
+                                    <option value="0">Female</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="p-2">
                             <img :src="profile_pic" alt="profile" class="h-64 w-48 rounded-2xl object-cover mr-6" />
-                            <Input label="Profile picture" type="file" name="email" class="w-fit" />
+                            <input class="rounded-2xl p-2 bg-primary m-5  border-dark_blue"
+                                   type="file" @change="handleFileChange"
+                            >
+                            <button @click="isFlipped = false"
+                                    class="border-2 m-2 border-dark_blue rounded-2xl p-3 font-semibold">Cancel
+                            </button>
+                            <button type="submit" class="bg-dark_blue rounded-2xl p-3 text-white font-semibold">Update
+                            </button>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -116,11 +191,11 @@ const flipCard = () => {
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.6s;
+    transition: transform 0.6s ease-in-out;
     transform-style: preserve-3d;
 }
 
-.flip-card-inner.flipped {
+.flipped {
     transform: rotateY(180deg);
 }
 
@@ -135,4 +210,5 @@ const flipCard = () => {
 .flip-card-back {
     transform: rotateY(180deg);
 }
+
 </style>

@@ -6,26 +6,25 @@ import homeApi from '@/api/home.js'
 import profileApi from '@/api/profile.js'
 import Svg from '@/components/common/Image.vue'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
-import Suggestions from '@/components/Home/Suggestions.vue'
+import Suggestions from '@/components/HomeComponents/Suggestions.vue'
 
-const homeStore = useHomeStore()
-const profileStore = useProfileStore()
-const errorMessage = ref()
+
+// Goal setter for challenge
 const count = ref(1)
-const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
-
 watch(count, () => {
     if (count.value < 1) {
         count.value = 1
     }
 })
 
+const homeStore = useHomeStore()
+const profileStore = useProfileStore()
+const errorMessage = ref()
 onMounted(async () => {
     try {
-        const response = await homeApi.getTrendingBooks()
-        const suggestions = await homeApi.getSuggestedBooks()
-        const response_user = await profileApi.getProfileDetails()
-
+        const response = await homeApi.trending()
+        const suggestions = await homeApi.suggested()
+        const response_user = await profileApi.profile()
         if (response.status === 200) {
             homeStore.trending = response.data
         } else {
@@ -43,6 +42,8 @@ onMounted(async () => {
         /* empty */
     }
 })
+// Main content cards
+const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
 </script>
 
 <template>
@@ -97,6 +98,7 @@ onMounted(async () => {
                         <div :style="{ backgroundImage: `url(${book.images})` }" class="absolute inset-0 bg-cover rounded-xl blur-sm bg-center"></div>
                         <div class="relative rounded-3xl z-5 flex flex-col justify-center items-center p-2 h-full bg-white opacity-70">
                             <h1 class="text-center font-bold">{{ book.title }}</h1>
+                            <h3 class="mt-4 text-center">{{ book.author.name }}</h3>
                             <div class="text-lg text-center">
                                 <span v-for="n in 5" :key="n">
                                     <i :class="['text-yellow', n <= book.rating / 2 ? 'fa-solid fa-star' : 'fa-regular fa-star']"></i>
@@ -109,7 +111,7 @@ onMounted(async () => {
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
                 <div class="relative overflow-hidden w-full">
                     <!-- Scrolling container -->
-                    <Suggestions :suggestions="homeStore.suggestions" />
+                    <Suggestions class="" />
                 </div>
             </div>
 
