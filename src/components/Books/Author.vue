@@ -1,6 +1,6 @@
 <template>
     <!-- About the Author Section -->
-    <div class="mt-12 flex relative p-6">
+    <div v-if="author" class="mt-12 flex relative p-6">
         <div class="absolute right-64 w-3/5 h-0.5 bg-dark_blue"></div>
         <span class="w-1/2"></span>
         <div class="w-2/3 relative py-14">
@@ -16,12 +16,12 @@
                         </div>
                     </div>
                     <p class="text-gray-600">
-                        No.of Books: <span class="font-bold text-dark_blue text-xl">{{ author.books_count }}</span>
+                        No.of Books: <span class="font-bold text-dark_blue text-xl">{{ author?.books_count }}</span>
                         &nbsp;|&nbsp; Followers:
-                        <strong>{{ author.data.followers.length }}</strong>
+                        <strong>{{ author.data.followers_count }}</strong>
                     </p>
                     <p class="text-gray-700 mt-2">
-                        {{ author.data.about_author }}
+                        {{ author?.data.about_author }}
                     </p>
                 </div>
                 <button class="ml-auto bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Follow</button>
@@ -83,22 +83,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import 'animate.css'
 import FollowAuthorButton from '@/components/Books/FollowAuthorButton.vue'
-// Reactive properties
 
-const rates = ref([
+const rates = [
     { star: 5, width: '80%', percent: '80%' },
     { star: 4, width: '60%', percent: '60%' },
     { star: 3, width: '40%', percent: '40%' },
     { star: 2, width: '20%', percent: '20%' },
     { star: 1, width: '10%', percent: '10%' },
-])
+]
 
 defineProps({
     author: {
         required: true,
+        type: Object,
     },
 })
 </script>

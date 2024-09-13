@@ -7,13 +7,17 @@ export const useHomeStore = defineStore(
         const trending = ref(null)
         const suggestions = ref(null)
         const images = () => {
-            suggestions.value.map((book) => book.images)
+            suggestions.value.map((book) => book.image)
         }
-
+        const resetStore = () => {
+            trending.value = null
+            suggestions.value = null
+        }
         return {
             trending,
             suggestions,
             images,
+            resetStore,
         }
     },
     { persist: true }

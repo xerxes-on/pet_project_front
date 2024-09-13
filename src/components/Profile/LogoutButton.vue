@@ -1,10 +1,18 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth.js'
 import { useRouter } from 'vue-router'
+import { useHomeStore } from '@/stores/home.js'
+import { useBookStore } from '@/stores/book.js'
+
 const router = useRouter()
+const authStore = useAuthStore()
+const homeStore = useHomeStore()
+const bookStore = useBookStore()
+
 const logout = () => {
-    const authStore = useAuthStore()
     authStore.resetStore()
+    homeStore.resetStore()
+    bookStore.resetStore()
     router.push({ name: 'login' })
 }
 </script>

@@ -1,20 +1,22 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import Author from '@/components/Books/Author.vue'
+import { formatDate } from '@/utilities.js'
 import bookApi from '@/api/book.js'
 import { useBookStore } from '@/stores/book.js'
 import ErrorPopup from '@/components/common/ErrorPopup.vue'
 import Reviews from '@/components/Books/Reviews.vue'
-import { formatDate } from '@/utilities.js'
+import Author from '@/components/Books/Author.vue'
 
 const bookStore = useBookStore()
-const errorMessage = ref()
+const errorMessage = ref('')
 
 onMounted(async () => {
     try {
         const bookResponse = await bookApi.getBookDetails(1)
+        const bookReviews = await bookApi.getBookReviews(1)
         if (bookResponse.status === 200) {
             bookStore.book = bookResponse.data
+            bookStore.reviews = bookReviews.data
         } else {
             errorMessage.value = bookResponse.data.message
         }
@@ -23,6 +25,7 @@ onMounted(async () => {
     }
 })
 const book = computed(() => bookStore.book)
+const reviews = computed(() => bookStore.reviews.ratings)
 </script>
 
 <template>
@@ -53,7 +56,7 @@ const book = computed(() => bookStore.book)
                         </span>
                     </div>
                     <span class="ml-2 text-lg">{{ book?.rating }}</span>
-                    <span class="ml-4 text-gray-500 opacity-50">({{ book?.ratings_count }} Ratings • {{ book?.reviews.length }} Reviews)</span>
+                    <!--                    <span class="ml-4 text-gray-500 opacity-50">({{ book?.ratings_count }} Ratings • {{ book?.reviews.length }} Reviews)</span>-->
                 </div>
 
                 <!-- Book Description -->
@@ -87,7 +90,7 @@ const book = computed(() => bookStore.book)
             </div>
         </div>
         <Author :author="book?.author" />
-        <Reviews :reviews="book?.ratings" />
+        <Reviews :reviews="reviews" />
     </div>
 </template>
 

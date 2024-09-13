@@ -1,38 +1,28 @@
 <template>
-    <button v-if="isFollowing" @click="unFollow" class="mt-2 bg-dark_blue text-white px-10 py-1 rounded-full text-sm hover:bg-light_blue">Unfollow</button>
-    <button v-else @click="follow" class="mt-2 bg-dark_blue text-white px-10 py-1 rounded-full text-sm hover:bg-light_blue">Follow</button>
+    <button @click="follow(author.data.id)" class="mt-2 bg-dark_blue text-white px-10 py-1 rounded-full text-sm hover:bg-light_blue">
+        {{ author.isFollowed ? 'Unfollow' : 'Follow' }}
+    </button>
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import followApi from '@/api/follow.js'
+import { useBookStore } from '@/stores/book.js'
 
-const props = defineProps({
+defineProps({
     author: {
         required: true,
+        type: Object,
     },
 })
-const isFollowing = ref(props.author.isFollowed)
+const bookStore = useBookStore()
 
-const follow = async () => {
+const follow = async (id) => {
     try {
-        const follow_response = await followApi.followAuthor(props.author.data.id)
+        const follow_response = await followApi.followAuthor(id)
         if (follow_response.status === 200) {
-            isFollowing.value = true
+            bookStore.book.author.isFollowed = !bookStore.book.author.isFollowed
         } else {
             console.log(follow_response.data)
-        }
-    } catch (e) {
-        console.log(e)
-    }
-}
-const unFollow = async () => {
-    try {
-        const follow_response = await followApi.unfollowAuthor(props.author.data.id)
-        if (follow_response.status === 200) {
-            isFollowing.value = false
-        } else {
-            console.log(follow_response.data.message)
         }
     } catch (e) {
         console.log(e)

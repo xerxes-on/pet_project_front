@@ -1,14 +1,17 @@
 <script setup>
 import { VueperSlide, VueperSlides } from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
-import { useHomeStore } from '@/stores/home.js'
 
-const homeStore = useHomeStore()
+const props = defineProps({
+    suggestedBooks: {
+        required: true,
+    },
+})
 </script>
 
 <template>
     <vueper-slides :infinite="true" duration="2000" autoplay class="no-shadow h-full" :visible-slides="3" :gap="2" :bullets="false" :slide-ratio="1 / 4" fixed-height="300px">
-        <vueper-slide v-for="book in homeStore.suggestions" :key="book.id" :image="book.images" class="rounded-2xl" />
+        <vueper-slide v-for="book in props.suggestedBooks" :key="book.id" :image="book.image" class="rounded-2xl" />
     </vueper-slides>
 </template>
 

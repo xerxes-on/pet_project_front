@@ -47,10 +47,9 @@ const hideMenu = () => {
                 <DropDown v-if="activeMenu === 'community'" :items="['Community 1', 'Community 2']" />
             </div>
 
-                <RouterLink :to="{ name: 'profile' }">
-                    <img src="@/assets/images/logo.png" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-                </RouterLink>
-
+            <RouterLink :to="{ name: 'profile' }">
+                <img alt="Profile" class="w-10 h-10 rounded-full object-cover" src="@/assets/images/logo.png" />
+            </RouterLink>
         </nav>
     </header>
 

@@ -75,20 +75,20 @@ async function updateProfile() {
                         </div>
                     </div>
                     <div class="p-2">
-                        <h1>{{ user.name }}</h1>
-                        <span>{{ user.username }}</span>
+                        <h1 class="font-bold text-3xl">{{ user.name }}</h1>
+                        <span>@{{ user.username }}</span>
                         <div class="flex justify-between p-4 w-full">
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-                                <h2 class="font-bold text-2xl">100</h2>
+                                <h2 class="font-bold text-2xl">{{ user.followers.length }}</h2>
                                 <p class="text-dark_blue">Followers</p>
                             </div>
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-                                <h2 class="font-bold text-2xl">100</h2>
-                                <p class="text-dark_blue">Followers</p>
+                                <h2 class="font-bold text-2xl">{{ user.following.length }}</h2>
+                                <p class="text-dark_blue">Following</p>
                             </div>
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-                                <h2 class="font-bold text-2xl">100</h2>
-                                <p class="text-dark_blue">Followers</p>
+                                <h2 class="font-bold text-2xl">{{ user.reviews.length }}</h2>
+                                <p class="text-dark_blue">Rated books</p>
                             </div>
                         </div>
                         <h1 class="text-2xl font-extra-light">Details</h1>
@@ -98,7 +98,7 @@ async function updateProfile() {
                         <br />
                         <p class="mt-2 text-gray-600">
                             Favorite <span class="text-dark_blue text-lg">Genres</span>: <br />
-                            <span v-for="(category, index) in user.genres" :key="index">{{ category.category_name }}</span>
+                            <span v-for="(genre, index) in user.liked_genres" :key="index">{{ genre.category_name }}</span>
                         </p>
                         <h1 class="text-2xl mt-2">My BookShelves</h1>
                         <div class="flex justify-between">
