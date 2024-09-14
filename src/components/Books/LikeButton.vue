@@ -6,6 +6,9 @@
 
 <script setup>
 import likeApi from '@/api/like.js'
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 const props = defineProps({
     review_id: {
@@ -16,13 +19,14 @@ const props = defineProps({
 const liked = defineModel({
     type: Boolean,
 })
+
 const like = async () => {
     try {
         const like_response = await likeApi.like_review(props.review_id)
-        console.log(like_response)
         if (like_response.status === 200) {
             liked.value = !liked.value
         } else {
+            toast.error('Please try again!')
             console.log(like_response.data.message)
         }
     } catch (e) {

@@ -1,19 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useProfileStore } from '@/stores/profile.js'
-import { formatDate } from 'compatx'
 import editProfileApi from '@/api/editProfile.js'
-import ErrorPopup from '@/components/common/ErrorPopup.vue'
+import { formatDate, removeNullKeys } from '@/utilities.js'
+import { useMainStore } from '@/stores/main.js'
+import { useToast } from 'vue-toastification'
 
 const profileStore = useProfileStore()
-const user = profileStore.user.user
-const profile_pic = user.profile_picture !== null ? user.profile_picture : 'src/assets/images/cat.jpg'
+const mainStore = useMainStore()
+const toast = useToast()
+const user = computed(() => profileStore.user.user)
+const profile_pic = user.value.profile_picture !== null ? user.value.profile_picture : 'src/assets/images/cat.jpg'
 
 const isFlipped = ref(false)
 
-const flipCard = () => {
-    isFlipped.value = !isFlipped.value
-}
 const data = ref({
     name: null,
     username: null,
@@ -24,40 +24,26 @@ const data = ref({
 function handleFileChange(event) {
     data.value.profile_picture = event.target.files[0]
 }
-
-function removeNullKeys(obj) {
-    for (const key in obj) {
-        if (obj[key] === null) {
-            delete obj[key]
-        }
-    }
-}
-
-const errorMessage = ref('')
-
 async function updateProfile() {
     try {
+        mainStore.loading = true
         removeNullKeys(data.value)
         const response = await editProfileApi.edit(data.value)
         if (response.status === 200) {
             profileStore.user = response.data.user
             isFlipped.value = false
         } else {
-            const errors = Object.values(response.data.errors)
-            errors.forEach((message) => {
-                errorMessage.value += message
-            })
+            toast.warning(response.data.message)
         }
     } catch (error) {
-        console.log(error)
+        toast.error('Oops! Something went wrong. Try again', error)
     } finally {
-        //
+        mainStore.loading = false
     }
 }
 </script>
 
 <template>
-    <ErrorPopup v-if="!!errorMessage" v-model="errorMessage" :message="errorMessage" />
     <section class="mb-6 h-[32rem]">
         <div :class="['flip-card-inner', { flipped: isFlipped }]">
             <!-- Front Side (Profile Header) -->
@@ -120,7 +106,7 @@ async function updateProfile() {
                     <div class="">
                         <h1 class="text-center text-xl py-5">My Favourite book</h1>
                         <img src="../../assets/images/home7.svg" alt="Favorite Book" class="w-44 rounded-lg object-cover" />
-                        <button @click="flipCard" class="m-5 bg-dark_blue text-white px-4 py-2 rounded-lg mt-10">Edit Profile</button>
+                        <button @click="isFlipped = !isFlipped" class="m-5 bg-dark_blue text-white px-4 py-2 rounded-lg mt-10">Edit Profile</button>
                     </div>
                 </div>
             </div>
@@ -132,20 +118,20 @@ async function updateProfile() {
                     <div class="flex justify-between">
                         <div class="p-3">
                             <div>
-                                <label for="Full name">Full Name</label>
-                                <input v-model="data.name" type="text" class="rounded-2xl p-2 bg-primary m-5 border-dark_blue" />
+                                <label for="full_name">Full Name</label>
+                                <input v-model="data.name" type="text" autocomplete="on" id="full_name" class="rounded-2xl p-2 bg-primary m-5 border-dark_blue" />
                             </div>
                             <div>
                                 <label for="username">Username</label>
-                                <input v-model="data.username" type="text" class="rounded-2xl p-2 bg-primary m-5 border-dark_blue" />
+                                <input v-model="data.username" type="text" autocomplete="on" id="username" class="rounded-2xl p-2 bg-primary m-5 border-dark_blue" />
                             </div>
                             <div>
                                 <label for="dob">Date of Birth</label>
-                                <input v-model="data.date_of_birth" type="date" class="rounded-2xl p-2 bg-primary m-5 border-dark_blue" />
+                                <input v-model="data.date_of_birth" autocomplete="on" type="date" id="dob" class="rounded-2xl p-2 bg-primary m-5 border-dark_blue" />
                             </div>
                             <div>
                                 <label for="gender">Gender</label>
-                                <select v-model="data.gender" class="rounded-2xl p-2 bg-primary m-5 border-dark_blue">
+                                <select v-model="data.gender" id="gender" class="rounded-2xl p-2 bg-primary m-5 border-dark_blue">
                                     <option value="2">Prefer not to say</option>
                                     <option value="1">Male</option>
                                     <option value="0">Female</option>
@@ -155,7 +141,7 @@ async function updateProfile() {
                         <div class="p-2">
                             <img :src="profile_pic" alt="profile" class="h-64 w-48 rounded-2xl object-cover mr-6" />
                             <input class="rounded-2xl p-2 bg-primary m-5 border-dark_blue" type="file" @change="handleFileChange" />
-                            <button @click="isFlipped = false" class="border-2 m-2 border-dark_blue rounded-2xl p-3 font-semibold">Cancel</button>
+                            <button @click="isFlipped = !isFlipped" class="border-2 m-2 border-dark_blue rounded-2xl p-3 font-semibold">Cancel</button>
                             <button type="submit" class="bg-dark_blue rounded-2xl p-3 text-white font-semibold">Update</button>
                         </div>
                     </div>

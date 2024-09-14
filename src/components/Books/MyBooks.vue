@@ -1,6 +1,5 @@
 <template>
-    <div class="min-h-screen bg-primary p-6">
-        <!-- Header Section -->
+    <section class="min-h-screen bg-primary p-6">
         <div class="flex justify-between items-center mb-6">
             <span></span>
             <h1 class="text-3xl font-bold">My Books</h1>
@@ -47,7 +46,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script setup>

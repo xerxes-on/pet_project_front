@@ -79,7 +79,13 @@ const searchGroups = () => {
 
         <!-- Search Section -->
         <div class="mb-8 flex justify-center">
-            <input v-model="searchQuery" type="text" class="w-1/2 p-3 rounded-2xl border-none shadow-xl focus:border-blue-300" placeholder="Group Name, Book Name, Author Name" />
+            <input
+                v-model="searchQuery"
+                type="text"
+                id="search"
+                class="w-1/2 p-3 rounded-2xl border-none shadow-xl focus:border-blue-300"
+                placeholder="Group Name, Book Name, Author Name"
+            />
             <button class="ml-4 bg-light_blue text-white px-6 py-3 rounded-2xl hover:bg-dark_blue" @click="searchGroups">Search Group</button>
         </div>
 

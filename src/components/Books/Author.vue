@@ -1,6 +1,6 @@
 <template>
     <!-- About the Author Section -->
-    <div v-if="author" class="mt-12 flex relative p-6">
+    <section v-if="author" class="mt-12 flex relative p-6">
         <div class="absolute right-64 w-3/5 h-0.5 bg-dark_blue"></div>
         <span class="w-1/2"></span>
         <div class="w-2/3 relative py-14">
@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="absolute -bottom-2 right-64 b-0 w-3/5 h-0.5 bg-dark_blue"></div>
-    </div>
-    <div class="p-4 flex justify-between w-full m-15 relative">
+    </section>
+    <section class="p-4 flex justify-between w-full m-15 relative">
         <div class="mt-12 ml-5 w-1/3 p-6 rounded-2xl flex flex-col justify-around items-center">
             <h2 class="text-6xl font-tangerine font-bold mb-4">Rating & Reviews</h2>
             <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User Avatar" class="w-24 h-24 rounded-full" />
@@ -79,7 +79,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script setup>
