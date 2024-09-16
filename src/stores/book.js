@@ -4,9 +4,10 @@ import { ref } from 'vue'
 export const useBookStore = defineStore(
     'bookStore',
     () => {
-        const book = ref(null)
-        const reviews = ref(null)
-        const quote = ref(null)
+        const book = ref('')
+        const reviews = ref('')
+        const quote = ref('')
+        const rate_book = ref('')
         const resetStore = () => {
             book.value = null
             reviews.value = null
@@ -16,6 +17,7 @@ export const useBookStore = defineStore(
             book,
             reviews,
             quote,
+            rate_book,
             resetStore,
         }
     },

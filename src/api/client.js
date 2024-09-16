@@ -1,12 +1,10 @@
 import axios from 'axios'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth.js'
-import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { useHomeStore } from '@/stores/home.js'
 import { useBookStore } from '@/stores/book.js'
 
-const toast = useToast()
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -47,7 +45,7 @@ client.interceptors.response.use(
         if (error.response && error.response.status === 401) {
             logout()
         } else {
-            toast.error(error.message)
+            console.log(error)
         }
         return Promise.reject(error)
     },

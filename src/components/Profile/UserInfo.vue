@@ -94,7 +94,6 @@ async function updateProfile() {
                             </div>
                             <div class="bg-dark_blue py-2 px-4 m-4 rounded-xl shadow-2xl text-white flex flex-col justify-center items-center">
                                 <p class="">Reading</p>
-
                                 <p class="text-xl">{{ profileStore.books_status.reading.length }}</p>
                             </div>
                             <div class="bg-dark_blue py-2 px-4 m-4 rounded-xl shadow-2xl text-white flex flex-col justify-center items-center">

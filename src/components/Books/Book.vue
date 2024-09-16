@@ -7,21 +7,18 @@ import { useMainStore } from '@/stores/main.js'
 import { useToast } from 'vue-toastification'
 import Reviews from '@/components/Books/Reviews.vue'
 import Author from '@/components/Books/Author.vue'
+import { useRoute } from 'vue-router'
 
 const bookStore = useBookStore()
 const mainStore = useMainStore()
 const toast = useToast()
-const props= defineProps({
-    id:{
-        type: String,
-        required: true,
-    }
-})
+const route = useRoute()
 onMounted(async () => {
     try {
         mainStore.loading = true
-        const bookResponse = await bookApi.getBookDetails(props.id )
-        const bookReviews = await bookApi.getBookReviews(props.id)
+        const bookResponse = await bookApi.getBookDetails(route.params.id)
+        const bookReviews = await bookApi.getBookReviews(route.params.id)
+        console.log(bookReviews)
         if (bookResponse.status === 200 && bookReviews.status === 200) {
             bookStore.book = bookResponse.data
             bookStore.reviews = bookReviews.data
@@ -99,7 +96,7 @@ const reviews = computed(() => bookStore.reviews.ratings)
                 </div>
             </div>
         </div>
-        <Author :author="book?.author" />
+        <Author :author="book?.author" :book="book" />
         <Reviews :reviews="reviews" />
     </main>
 </template>
