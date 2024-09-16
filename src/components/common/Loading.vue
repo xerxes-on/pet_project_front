@@ -18,12 +18,14 @@ section {
     justify-content: center;
     background-color: #f6ffde;
 }
+
 .star {
     height: 22vh;
     width: 12vw;
     position: relative;
     animation: rotate 2s ease infinite;
 }
+
 .corner {
     height: 48%;
     width: 48%;

@@ -6,13 +6,14 @@ import { useVuelidate } from '@vuelidate/core'
 import { useAuthStore } from '@/stores/auth.js'
 import authAPI from '@/api/auth.js'
 import Svg from '@/components/common/Image.vue'
-import ErrorPopup from '@/components/common/ErrorPopup.vue'
+import { useMainStore } from '@/stores/main.js'
+import { useToast } from 'vue-toastification'
 
 const showPassword = ref(false)
 const router = useRouter()
-const error = ref(false)
 const authStore = useAuthStore()
-
+const mainStore = useMainStore()
+const toast = useToast()
 const data = reactive({
     name: '',
     email: '',
@@ -34,26 +35,25 @@ const registerHandler = async () => {
     const validation = await v$.value.$validate()
     if (validation) {
         try {
+            mainStore.loading = true
             const response = await authAPI.register(data)
             if (response.status === 200) {
                 authStore.setUser(response.data.user)
                 authStore.setToken(response.data.authorization.token)
                 await router.push({ name: 'home' })
             } else {
-                alert('Something went wrong try again')
-                error.value = true
+                toast.warning(response.data.message)
             }
         } catch (err) {
-            console.log(err)
+            toast.error('Oops! Something went wrong. Try again', err)
         } finally {
-            //
+            mainStore.loading = false
         }
     }
 }
 </script>
 
 <template>
-    <ErrorPopup v-if="error" v-model="error" />
     <div class="bg-light_blue w-full rounded-2xl p-4 py-10 mb-2 relative flex flex-col justify-center items-center">
         <h2 class="text-2xl font-bold mb-2">Welcome to LetsRate</h2>
         <p class="mb-6">Sign Up to Continue</p>
@@ -66,13 +66,20 @@ const registerHandler = async () => {
                 </div>
             </div>
             <div class="mb-4 w-1/2">
-                <input type="email" v-model="data.email" placeholder="Enter email" class="w-full p-2 rounded-full" />
+                <input type="email" v-model="data.email" placeholder="Enter email" id="email" autocomplete="on" class="w-full p-2 rounded-full" />
                 <div class="input-errors" v-for="error of v$.email.$errors" :key="error.$uid">
                     <span class="error-msg">{{ error.$message }}</span>
                 </div>
             </div>
             <div class="mb-4 relative w-1/2">
-                <input :type="showPassword ? 'text' : 'password'" placeholder="Enter Password" v-model="data.password" class="w-full p-2 rounded-full" />
+                <input
+                    :type="showPassword ? 'text' : 'password'"
+                    placeholder="Enter Password"
+                    id="password"
+                    autocomplete="on"
+                    v-model="data.password"
+                    class="w-full p-2 rounded-full"
+                />
                 <button @click.prevent="showPassword = !showPassword" class="absolute right-3 top-2.5">
                     <i class="fa-regular" :class="showPassword ? 'fa-eye' : 'fa-eye-slash'" />
                 </button>
@@ -82,7 +89,14 @@ const registerHandler = async () => {
             </div>
 
             <div class="mb-4 relative w-1/2">
-                <input :type="showPassword ? 'text' : 'password'" placeholder="Confirm Password" v-model="data.confirm_password" class="w-full p-2 rounded-full" />
+                <input
+                    :type="showPassword ? 'text' : 'password'"
+                    placeholder="Confirm Password"
+                    autocomplete="on"
+                    v-model="data.confirm_password"
+                    id="confirm_password"
+                    class="w-full p-2 rounded-full"
+                />
                 <button class="absolute right-3 top-2.5">
                     <i class="fa-regular" :class="showPassword ? 'fa-eye' : 'fa-eye-slash'" />
                 </button>

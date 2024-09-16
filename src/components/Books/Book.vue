@@ -1,30 +1,33 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { formatDate } from '@/utilities.js'
 import bookApi from '@/api/book.js'
 import { useBookStore } from '@/stores/book.js'
-import ErrorPopup from '@/components/common/ErrorPopup.vue'
+import { useMainStore } from '@/stores/main.js'
+import { useToast } from 'vue-toastification'
 import Reviews from '@/components/Books/Reviews.vue'
 import Author from '@/components/Books/Author.vue'
-import { useMainStore } from '@/stores/main.js'
+import { useRoute } from 'vue-router'
 
 const bookStore = useBookStore()
 const mainStore = useMainStore()
-const errorMessage = ref('')
-
+const toast = useToast()
+const route = useRoute()
 onMounted(async () => {
     try {
         mainStore.loading = true
-        const bookResponse = await bookApi.getBookDetails(1)
-        const bookReviews = await bookApi.getBookReviews(1)
-        if (bookResponse.status === 200) {
+        const bookResponse = await bookApi.getBookDetails(route.params.id)
+        const bookReviews = await bookApi.getBookReviews(route.params.id)
+        console.log(bookReviews)
+        if (bookResponse.status === 200 && bookReviews.status === 200) {
             bookStore.book = bookResponse.data
             bookStore.reviews = bookReviews.data
         } else {
-            errorMessage.value = bookResponse.data.message
+            toast.error(bookResponse.data.message)
+            toast.error(bookReviews.data.message)
         }
     } catch (e) {
-        console.log(e)
+        toast.error('Oops! Something went wrong', e)
     } finally {
         mainStore.loading = false
     }
@@ -34,8 +37,7 @@ const reviews = computed(() => bookStore.reviews.ratings)
 </script>
 
 <template>
-    <ErrorPopup v-if="!!errorMessage" v-model="errorMessage" :message="errorMessage" />
-    <div class="min-h-screen p-6 bg-primary text-gray-900">
+    <main class="min-h-screen p-6 bg-primary text-gray-900">
         <div class="grid grid-cols-12 gap-8">
             <div class="col-span-4">
                 <div class="p-4 rounded-2xl shadow-md">
@@ -94,9 +96,9 @@ const reviews = computed(() => bookStore.reviews.ratings)
                 </div>
             </div>
         </div>
-        <Author :author="book?.author" />
+        <Author :author="book?.author" :book="book" />
         <Reviews :reviews="reviews" />
-    </div>
+    </main>
 </template>
 
 <style scoped></style>

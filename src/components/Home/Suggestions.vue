@@ -2,7 +2,7 @@
 import { VueperSlide, VueperSlides } from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
 
-const props = defineProps({
+defineProps({
     suggestedBooks: {
         required: true,
     },
@@ -11,7 +11,7 @@ const props = defineProps({
 
 <template>
     <vueper-slides :infinite="true" duration="2000" autoplay class="no-shadow h-full" :visible-slides="3" :gap="2" :bullets="false" :slide-ratio="1 / 4" fixed-height="300px">
-        <vueper-slide v-for="book in props.suggestedBooks" :key="book.id" :image="book.image" class="rounded-2xl" />
+            <vueper-slide v-for="book in suggestedBooks" :key="book.id" :image="book.image" class="rounded-2xl" />
     </vueper-slides>
 </template>
 

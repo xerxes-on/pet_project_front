@@ -35,6 +35,16 @@ const router = createRouter({
             component: () => import('@/views/MyBooks.vue'),
         },
         {
+            path: '/book/:id',
+            name: 'book',
+            component: () => import('@/views/Book.vue'),
+        },
+        {
+            path: '/quotes/:id',
+            name: 'quote',
+            component: () => import('@/views/Quote.vue'),
+        },
+        {
             path: '/:pathMatch(.*)*',
             name: 'notFound',
             component: () => import('@/views/NotFound.vue'),

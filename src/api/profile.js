@@ -7,7 +7,14 @@ const getProfileDetails = () => {
         .catch((error) => error.response)
 }
 
+const getQuote = (id) => {
+    return client
+        .get('/quotes/' + id)
+        .then((response) => response)
+        .catch((error) => error.response)
+}
 const profileApi = {
     getProfileDetails,
+    getQuote
 }
 export default profileApi
