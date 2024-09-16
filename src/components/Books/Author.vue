@@ -1,5 +1,4 @@
 <template>
-    <!-- About the Author Section -->
     <section v-if="author" class="mt-12 flex relative p-6">
         <div class="absolute right-64 w-3/5 h-0.5 bg-dark_blue"></div>
         <span class="w-1/2"></span>
@@ -12,16 +11,16 @@
                     <div>
                         <h3 class="text-4xl font-bold mb-10">{{ author.data.name }}</h3>
                         <div>
-                            <FollowAuthorButton :author="author" />
+                            <FollowAuthorButton :author="author" v-model="localAuthor.isFollowed"/>
                         </div>
                     </div>
                     <p class="text-gray-600">
-                        No.of Books: <span class="font-bold text-dark_blue text-xl">{{ author?.books_count }}</span>
+                        No.of Books: <span class="font-bold text-dark_blue text-xl">{{ author.books_count?author.books_count:'0' }}</span>
                         &nbsp;|&nbsp; Followers:
-                        <strong>{{ author.data.followers_count }}</strong>
+                        <strong>{{ author.data.followers_count ? author.data.followers_count:'0'}}</strong>
                     </p>
                     <p class="text-gray-700 mt-2">
-                        {{ author?.data.about_author }}
+                        {{ author.data.about_author }}
                     </p>
                 </div>
                 <button class="ml-auto bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Follow</button>
@@ -85,6 +84,7 @@
 <script setup>
 import 'animate.css'
 import FollowAuthorButton from '@/components/Books/FollowAuthorButton.vue'
+import { ref } from 'vue'
 
 const rates = [
     { star: 5, width: '80%', percent: '80%' },
@@ -94,12 +94,13 @@ const rates = [
     { star: 1, width: '10%', percent: '10%' },
 ]
 
-defineProps({
+const props =  defineProps({
     author: {
         required: true,
         type: Object,
     },
 })
+const localAuthor = ref(props.author)
 </script>
 
 <style scoped></style>

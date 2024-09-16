@@ -45,7 +45,6 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
 
 <template>
     <main class="p-4 pb-10 bg-primary">
-        <!-- Main Content -->
         <section class="flex justify-around">
             <div class="w-1/4 h-fit bg-primary_dark flex justify-between flex-col rounded-2xl shadow-md p-4 mr-4 border-1 border-dark_blue">
                 <h2 class="text-lg font-bold mb-2 text-center">2024 READING CHALLENGE</h2>
@@ -102,7 +101,8 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
                 <div class="relative overflow-hidden w-full">
                     <!-- Scrolling container -->
-                    <Suggestions :suggested-books="[...homeStore.suggestions]" />
+                    <Suggestions v-if="homeStore.suggestions"
+                        :suggested-books="homeStore.suggestions" />
                 </div>
             </div>
             <!-- Right Sidebar -->

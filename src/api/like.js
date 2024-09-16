@@ -6,8 +6,14 @@ const like_review = (review_id) => {
         .then((response) => response)
         .catch((error) => error.response)
 }
-
+const like_quote = (quote_id) => {
+    return client
+        .put('/quotes/' + quote_id + '/like')
+        .then((response) => response)
+        .catch((error) => error.response)
+}
 const likeApi = {
     like_review,
+    like_quote
 }
 export default likeApi

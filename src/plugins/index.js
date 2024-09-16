@@ -2,6 +2,7 @@ import pinia from '@/stores/index.js'
 import router from '../router'
 import Toast, { POSITION } from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
+import InstantSearch from 'vue-instantsearch/vue3/es';
 
 const options = {
     transition: 'Vue-Toastification__bounce',
@@ -13,5 +14,5 @@ const options = {
     pauseOnHover: true,
 }
 export function registerPlugins(app) {
-    app.use(router).use(pinia).use(Toast, options)
+    app.use(router).use(InstantSearch).use(pinia).use(Toast, options)
 }

@@ -11,12 +11,18 @@ import Author from '@/components/Books/Author.vue'
 const bookStore = useBookStore()
 const mainStore = useMainStore()
 const toast = useToast()
+const props= defineProps({
+    id:{
+        type: String,
+        required: true,
+    }
+})
 onMounted(async () => {
     try {
         mainStore.loading = true
-        const bookResponse = await bookApi.getBookDetails(1)
-        const bookReviews = await bookApi.getBookReviews(1)
-        if (bookResponse.status === 200) {
+        const bookResponse = await bookApi.getBookDetails(props.id )
+        const bookReviews = await bookApi.getBookReviews(props.id)
+        if (bookResponse.status === 200 && bookReviews.status === 200) {
             bookStore.book = bookResponse.data
             bookStore.reviews = bookReviews.data
         } else {
