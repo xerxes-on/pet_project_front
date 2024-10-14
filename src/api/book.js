@@ -12,9 +12,15 @@ const getBookReviews = (id) => {
         .then((response) => response)
         .catch((error) => error.response)
 }
-
+const rateBook = (data) => {
+    return client
+        .post('/reviews', data)
+        .then((response) => response)
+        .catch((error) => error.response)
+}
 const bookApi = {
     getBookDetails,
     getBookReviews,
+    rateBook
 }
 export default bookApi

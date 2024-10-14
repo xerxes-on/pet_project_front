@@ -28,12 +28,14 @@ onMounted(async () => {
         const trending = await homeApi.getTrendingBooks()
         const response_user = await profileApi.getProfileDetails()
         console.log(trending)
-        if (response_user.status === 200 && suggestions.status === 200 && trending.status === 200) {
+        if ( suggestions.status === 200 && trending.status === 200) {
             homeStore.suggestions = suggestions.data
-            profileStore.user = response_user.data
             homeStore.trending = trending.data
         } else {
             errorMessage.value = 'There was an error with our servers please try again later'
+        }
+        if(response_user.status === 200 ){
+            profileStore.user = response_user.data
         }
     } catch (err) {
         console.log(err)
@@ -111,7 +113,6 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
                     <Suggestions :suggested-books="homeStore.suggestions" />
                 </div>
             </div>
-            ]
             <!-- Right Sidebar -->
             <div class="w-1/4 bg-primary_dark h-fit rounded-lg shadow-md p-4 ml-4">
                 <h2 class="text-lg font-bold mb-2 text-center">WELCOME TO LetsRate</h2>

@@ -7,6 +7,7 @@ import ErrorPopup from '@/components/common/ErrorPopup.vue'
 import Reviews from '@/components/Books/Reviews.vue'
 import Author from '@/components/Books/Author.vue'
 import { useMainStore } from '@/stores/main.js'
+import Authortest from '@/components/Books/Authortest.vue'
 
 const bookStore = useBookStore()
 const mainStore = useMainStore()
@@ -94,7 +95,7 @@ const reviews = computed(() => bookStore.reviews.ratings)
                 </div>
             </div>
         </div>
-        <Author :author="book?.author" />
+        <Authortest :author="book?.author" />
         <Reviews :reviews="reviews" />
     </div>
 </template>
