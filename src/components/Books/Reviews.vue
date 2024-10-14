@@ -12,8 +12,7 @@ defineProps({
 </script>
 
 <template>
-    <!-- Reader Reviews Section -->
-    <div v-if="reviews" class="mt-12 p-6 rounded-2xl">
+    <section v-if="reviews" class="mt-12 p-6 rounded-2xl">
         <h2 class="text-7xl font-tangerine mb-4">Readers Reviews</h2>
         <div>
             <p class="text-gray">Displaying 1 - 10 of 68 reviews</p>
@@ -45,7 +44,7 @@ defineProps({
                     <div class="flex items-center justify-around w-1/2 space-x-4 mt-4">
                         <div class="flex items-center space-x-1">
                             <span class="mr-5">{{ review.data.likes }} Likes</span>
-                            <LikeButton v-model="review.is_liked" :review_id="review.data.id" />
+                            <LikeButton v-model="review.is_liked" :id="review.data.id" like_what="review"/>
                         </div>
                         <div class="flex items-center space-x-1">
                             <i class="far fa-comment"></i>
@@ -55,7 +54,7 @@ defineProps({
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <style scoped></style>

@@ -18,32 +18,32 @@ const hideMenu = () => {
         <!-- Logo Section -->
         <RouterLink :to="{ name: 'home' }">
             <div class="flex items-center space-x-2">
-                <img src="@/assets/images/logo.png" alt="Logo" class="w-11 h-11 rounded-full object-cover" />
+                <img alt="Logo" class="w-11 h-11 rounded-full object-cover" src="@/assets/images/logo.png" />
                 <span class="text-2xl font-bold">LetsRate</span>
             </div>
         </RouterLink>
         <!-- Navigation Section -->
         <nav class="flex space-x-8">
-            <a href="#" class="relative group">
+            <a class="relative group" href="#">
                 <RouterLink :to="{ name: 'search' }" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Search </RouterLink>
                 <span class="absolute bottom-0 left-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
             </a>
 
             <!-- Dropdown for My Books -->
             <div class="relative group" @mouseenter="showMenu('books')" @mouseleave="hideMenu">
-                <RouterLink :to="{ name: 'myBooks' }" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Books</RouterLink>
+                <RouterLink :to="{ name: 'myBooks' }" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Books </RouterLink>
                 <DropDown v-if="activeMenu === 'books'" :items="['My Books 1', 'My Books 2']" />
             </div>
 
             <!-- Dropdown for Reviews -->
             <div class="relative group" @mouseenter="showMenu('reviews')" @mouseleave="hideMenu">
-                <a href="#" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Reviews</a>
+                <a class="hover:bg-light_blue p-2 rounded-2xl font-semibold" href="#">Reviews</a>
                 <DropDown v-if="activeMenu === 'reviews'" :items="['Review 1', 'Review 2']" />
             </div>
 
             <!-- Dropdown for Community -->
             <div class="relative group" @mouseenter="showMenu('community')" @mouseleave="hideMenu">
-                <a href="#" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Community</a>
+                <a class="hover:bg-light_blue p-2 rounded-2xl font-semibold" href="#">Community</a>
                 <DropDown v-if="activeMenu === 'community'" :items="['Community 1', 'Community 2']" />
             </div>
 
@@ -62,13 +62,13 @@ const hideMenu = () => {
             <div>
                 <h3 class="text-lg font-bold mb-4">COMPANY</h3>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">About us</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Careers</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Terms</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Privacy</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Interest Based Ads</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Ads Preferences</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Help</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">About us</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">Careers</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">Terms</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">Privacy</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">Interest Based Ads</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">Ads Preferences</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">Help</a></li>
                 </ul>
             </div>
 
@@ -76,10 +76,10 @@ const hideMenu = () => {
             <div>
                 <h3 class="text-lg font-bold mb-4">WORK WITH US</h3>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Authors</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Advertise</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Author & Ads blog</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">API</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">Authors</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">Advertise</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">Author & Ads blog</a></li>
+                    <li><a class="text-gray-700 hover:text-gray-900" href="#">API</a></li>
                 </ul>
             </div>
 
@@ -87,16 +87,16 @@ const hideMenu = () => {
             <div>
                 <h3 class="text-lg font-bold mb-4">CONTACT</h3>
                 <div class="flex justify-center md:justify-start space-x-4 text-3xl">
-                    <a href="#" class="text-gray-700 hover:text-gray-900">
+                    <a class="text-gray-700 hover:text-gray-900" href="#">
                         <i class="fab fa-facebook"></i>
                     </a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">
+                    <a class="text-gray-700 hover:text-gray-900" href="#">
                         <i class="fab fa-x-twitter"></i>
                     </a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">
+                    <a class="text-gray-700 hover:text-gray-900" href="#">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">
+                    <a class="text-gray-700 hover:text-gray-900" href="#">
                         <i class="fab fa-linkedin"></i>
                     </a>
                 </div>
@@ -106,8 +106,8 @@ const hideMenu = () => {
 
                 <div>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-700 hover:text-gray-900">FAQ</a></li>
-                        <li><a href="#" class="text-gray-700 hover:text-gray-900">Search Guide</a></li>
+                        <li><a class="text-gray-700 hover:text-gray-900" href="#">FAQ</a></li>
+                        <li><a class="text-gray-700 hover:text-gray-900" href="#">Search Guide</a></li>
                     </ul>
                 </div>
             </div>

@@ -14,10 +14,12 @@ const getBookReviews = (id) => {
 }
 const rateBook = (data) => {
     return client
-        .post('/reviews', data)
+        .post('/reviews/', data)
         .then((response) => response)
         .catch((error) => error.response)
 }
+
+
 const bookApi = {
     getBookDetails,
     getBookReviews,

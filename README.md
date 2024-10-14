@@ -26,4 +26,5 @@ npm run dev
 
 ```sh
 npm run build
+npm run build:css
 ```

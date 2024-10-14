@@ -5,9 +5,9 @@ import { useProfileStore } from '@/stores/profile.js'
 import homeApi from '@/api/home.js'
 import profileApi from '@/api/profile.js'
 import Svg from '@/components/common/Image.vue'
-import ErrorPopup from '@/components/common/ErrorPopup.vue'
 import Suggestions from '@/components/Home/Suggestions.vue'
 import { useMainStore } from '@/stores/main.js'
+import { useToast } from 'vue-toastification'
 
 // Goal setter for challenge
 const count = ref(1)
@@ -20,25 +20,22 @@ watch(count, () => {
 const homeStore = useHomeStore()
 const profileStore = useProfileStore()
 const mainStore = useMainStore()
-const errorMessage = ref('')
+const toast = useToast()
 onMounted(async () => {
     try {
         mainStore.loading = true
         const suggestions = await homeApi.getSuggestedBooks()
         const trending = await homeApi.getTrendingBooks()
         const response_user = await profileApi.getProfileDetails()
-        console.log(trending)
-        if ( suggestions.status === 200 && trending.status === 200) {
+        if (response_user.status === 200 && suggestions.status === 200 && trending.status === 200) {
             homeStore.suggestions = suggestions.data
+            profileStore.user = response_user.data
             homeStore.trending = trending.data
         } else {
-            errorMessage.value = 'There was an error with our servers please try again later'
-        }
-        if(response_user.status === 200 ){
-            profileStore.user = response_user.data
+            toast.warning('Could not connect! Try again')
         }
     } catch (err) {
-        console.log(err)
+        toast.error('Oops! Something went wrong', err)
     } finally {
         mainStore.loading = false
     }
@@ -47,11 +44,8 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
 </script>
 
 <template>
-    <ErrorPopup v-if="!!errorMessage" v-model="errorMessage" :message="errorMessage" />
-    <div class="p-4 pb-10 bg-primary">
-        <!-- Main Content -->
-        <div class="flex justify-around">
-            <!-- Left Sidebar -->
+    <main class="p-4 pb-10 bg-primary">
+        <section class="flex justify-around">
             <div class="w-1/4 h-fit bg-primary_dark flex justify-between flex-col rounded-2xl shadow-md p-4 mr-4 border-1 border-dark_blue">
                 <h2 class="text-lg font-bold mb-2 text-center">2024 READING CHALLENGE</h2>
                 <p class="text-sm mb-4">
@@ -89,10 +83,8 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
                 </div>
             </div>
 
-            <!-- Main Content Area -->
             <div class="flex-1 h-fit">
                 <h2 class="text-xl font-bold mb-4 text-center">Trending Books</h2>
-                <!--Books-->
                 <div class="grid grid-cols-2 gap-3 p-2 lg:grid-cols-3">
                     <div v-for="(book, index) in homeStore.trending" :key="index" class="relative p-3 rounded-xl shadow-lg" :class="classes[index]">
                         <div :style="{ backgroundImage: `url(${book.image})` }" class="absolute inset-0 bg-cover rounded-xl blur-sm bg-center"></div>
@@ -106,11 +98,11 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
                         </div>
                     </div>
                 </div>
-
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
                 <div class="relative overflow-hidden w-full">
                     <!-- Scrolling container -->
-                    <Suggestions :suggested-books="homeStore.suggestions" />
+                    <Suggestions v-if="homeStore.suggestions"
+                        :suggested-books="homeStore.suggestions" />
                 </div>
             </div>
             <!-- Right Sidebar -->
@@ -131,8 +123,8 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
                     <li class="text-center">Authors & Ads Blog</li>
                 </ul>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 </template>
 
 <style scoped></style>
