@@ -43,7 +43,6 @@ defineProps({
                     </p>
                     <div class="flex items-center justify-around w-1/2 space-x-4 mt-4">
                         <div class="flex items-center space-x-1">
-                            <span class="mr-5">{{ review.data.likes }} Likes</span>
                             <LikeButton v-model="review.is_liked" :id="review.data.id" like_what="review"/>
                         </div>
                         <div class="flex items-center space-x-1">

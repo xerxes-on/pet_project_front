@@ -3,16 +3,21 @@ import { useAuthStore } from '@/stores/auth.js'
 import { useRouter } from 'vue-router'
 import { useHomeStore } from '@/stores/home.js'
 import { useBookStore } from '@/stores/book.js'
+import {useReviewsStore } from '@/stores/reviews.js'
+import { useProfileStore } from '@/stores/profile.js'
 
 const router = useRouter()
 const authStore = useAuthStore()
 const homeStore = useHomeStore()
 const bookStore = useBookStore()
-
+const reviews = useReviewsStore()
+const profile = useProfileStore()
 const logout = () => {
     authStore.resetStore()
     homeStore.resetStore()
     bookStore.resetStore()
+    reviews.resetStore()
+    profile.resetProfile()
     router.push({ name: 'login' })
 }
 </script>

@@ -37,7 +37,7 @@ const hideMenu = () => {
 
             <!-- Dropdown for Reviews -->
             <div class="relative group" @mouseenter="showMenu('reviews')" @mouseleave="hideMenu">
-                <a class="hover:bg-light_blue p-2 rounded-2xl font-semibold" href="#">Reviews</a>
+                <a class="hover:bg-light_blue p-2 rounded-2xl font-semibold" href="/reviews">Reviews</a>
                 <DropDown v-if="activeMenu === 'reviews'" :items="['Review 1', 'Review 2']" />
             </div>
 

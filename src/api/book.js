@@ -18,11 +18,17 @@ const rateBook = (data) => {
         .then((response) => response)
         .catch((error) => error.response)
 }
-
+const getReviews = (page) => {
+    return client
+        .get('/all-reviews?page=' + page)
+        .then((response) => response)
+        .catch((error) => error.response)
+}
 
 const bookApi = {
     getBookDetails,
     getBookReviews,
-    rateBook
+    rateBook,
+    getReviews,
 }
 export default bookApi

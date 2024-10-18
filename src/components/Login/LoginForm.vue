@@ -38,7 +38,7 @@ const loginHandler = async () => {
                 toast.warning(response.data.message)
             }
         } catch (err) {
-            toast.error('Oops! Something went wrong. Try again.', err)
+            toast.error('Oops! Something went wrong. Try again.'+ err)
         } finally {
             mainStore.loading = false
         }

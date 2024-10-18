@@ -45,6 +45,16 @@ const router = createRouter({
             component: () => import('@/views/Quote.vue'),
         },
         {
+            path: '/reviews',
+            name: 'reviews',
+            component: () => import('@/views/Reviews.vue'),
+        },
+        {
+            path: '/verify',
+            name: 'verify',
+            component: () => import('@/views/EmailVerify.vue'),
+        },
+        {
             path: '/:pathMatch(.*)*',
             name: 'notFound',
             component: () => import('@/views/NotFound.vue'),

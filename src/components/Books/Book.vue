@@ -27,18 +27,19 @@ onMounted(async () => {
             toast.error(bookReviews.data.message)
         }
     } catch (e) {
-        toast.error('Oops! Something went wrong', e)
+        toast.error('Oops! '+ e)
     } finally {
         mainStore.loading = false
     }
 })
 const book = computed(() => bookStore.book)
-const reviews = computed(() => bookStore.reviews.ratings)
+const reviews = computed(() => bookStore.reviews['ratings'])
+
 </script>
 
 <template>
-    <main class="min-h-screen p-6 bg-primary text-gray-900">
-        <div class="grid grid-cols-12 gap-8">
+    <main v-if="book" class="min-h-screen p-6 bg-primary text-gray-900">
+        <div  class="grid grid-cols-12 gap-8">
             <div class="col-span-4">
                 <div class="p-4 rounded-2xl shadow-md">
                     <img :src="book?.image" alt="Book Cover" class="rounded-lg w-full h-auto" />
@@ -97,7 +98,7 @@ const reviews = computed(() => bookStore.reviews.ratings)
             </div>
         </div>
         <Author :author="book?.author" :book="book" />
-        <Reviews :reviews="reviews" />
+        <Reviews v-if="reviews" :reviews="reviews" />
     </main>
 </template>
 

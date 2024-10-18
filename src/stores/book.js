@@ -12,6 +12,7 @@ export const useBookStore = defineStore(
             book.value = null
             reviews.value = null
             quote.value = null
+            rate_book.value = null
         }
         return {
             book,

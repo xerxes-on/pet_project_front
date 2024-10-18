@@ -139,6 +139,7 @@ export default {
                             </RouterLink>
                         </template>
                     </ais-hits>
+                    <ais-pagination class="my-5"></ais-pagination>
                 </ais-instant-search>
             </div>
             <div class="col-span-4 m-4">

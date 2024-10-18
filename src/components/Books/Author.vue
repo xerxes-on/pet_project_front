@@ -2,7 +2,6 @@
 import { reactive, ref } from 'vue'
 import { useMainStore } from '@/stores/main.js'
 import { useToast } from 'vue-toastification'
-import StarRating from 'vue-star-rating'
 import FollowAuthorButton from '@/components/Books/FollowAuthorButton.vue'
 import bookApi from '@/api/book.js'
 import { vConfetti } from '@neoconfetti/vue'
@@ -31,8 +30,9 @@ const isFlipped = ref(false)
 const toast = useToast()
 const mainStore = useMainStore()
 
+const currentRating = ref(0);
 const data = reactive({
-    rating: null,
+    rating: currentRating.value,
     comment: null,
     book_id: props.book.id,
 })
@@ -54,6 +54,17 @@ const submitReview = (async () => {
         mainStore.loading = false
     }
 })
+const hoverRating = ref(0); // Stores the hover rating
+const setRating = (rating) => {
+    currentRating.value = rating;
+}
+const setHoverRating = (rating) => {
+    hoverRating.value = rating;
+};
+const resetHoverRating = () => {
+    hoverRating.value = 0;
+};
+
 </script>
 
 <template>
@@ -137,8 +148,7 @@ const submitReview = (async () => {
                             <div class="w-full space-y-5">
                                 <div v-for="(rate, index) in rates" :key="index" class="flex items-center">
                                     <div class="text-sm">
-                        <span class="mr-1">{{ rate.star }}</span
-                        >stars
+                                        <span class="mr-1">{{ rate.star }}</span>stars
                                     </div>
                                     <div class="w-full bg-gray h-2 rounded-full mx-2">
                                         <div
@@ -164,13 +174,21 @@ const submitReview = (async () => {
                     </div>
                     <h3 class="text-xl font-bold text-center text-gray-700 mb-2">{{ book.title }}</h3>
                     <p class="text-center text-gray-600 mb-4">{{ book.author.data.name }}</p>
-                    <div class="flex justify-center bg-orange mb-4 text-3xl text-yellow">
-                        <star-rating
-                            v-model:rating="data.rating"
-                            :animate="true"
-                            :glow="4"
-                            :show-rating="false"
-                        ></star-rating>
+                    <div class="flex space-x-2 justify-center items-center">
+                        <span
+                            v-for="star in 5"
+                            :key="star"
+                            :class="[
+                            'text-4xl cursor-pointer transition-transform duration-300',
+                            star <= hoverRating || star <= currentRating ? 'text-yellow' : 'text-gray-300',
+                            star <= hoverRating ? 'scale-125' : ''
+                          ]"
+                            @mouseover="setHoverRating(star)"
+                            @mouseleave="resetHoverRating"
+                            @click="setRating(star)"
+                        >
+                          &#9733;
+                        </span>
                     </div>
                     <textarea
                         v-model="data.comment"

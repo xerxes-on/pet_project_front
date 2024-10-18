@@ -1,19 +1,19 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useProfileStore } from '@/stores/profile.js'
 import editProfileApi from '@/api/editProfile.js'
 import { formatDate, removeNullKeys } from '@/utilities.js'
 import { useMainStore } from '@/stores/main.js'
 import { useToast } from 'vue-toastification'
-
+import { vConfetti } from '@neoconfetti/vue'
+import 'animate.css'
 const profileStore = useProfileStore()
 const mainStore = useMainStore()
 const toast = useToast()
-const user = computed(() => profileStore.user.user)
-const profile_pic = user.value.profile_picture !== null ? user.value.profile_picture : 'src/assets/images/cat.jpg'
+const user = ref(profileStore.getUser())
 
 const isFlipped = ref(false)
-
+const visible = ref(false)
 const data = ref({
     name: null,
     username: null,
@@ -30,7 +30,9 @@ async function updateProfile() {
         removeNullKeys(data.value)
         const response = await editProfileApi.edit(data.value)
         if (response.status === 200) {
-            profileStore.user = response.data.user
+            profileStore.setUser(response.data.user)
+            visible.value = true
+            user.value = response.data.user
             isFlipped.value = false
         } else {
             toast.warning(response.data.message)
@@ -41,16 +43,18 @@ async function updateProfile() {
         mainStore.loading = false
     }
 }
+console.log(user.value)
 </script>
 
 <template>
-    <section class="mb-6 h-[32rem]">
+    <section v-if="user" class="mb-6 h-[32rem]">
         <div :class="['flip-card-inner', { flipped: isFlipped }]">
             <!-- Front Side (Profile Header) -->
             <div class="flip-card-front bg-orange p-6 rounded-2xl shadow-md w-96 h-full">
                 <div class="flex justify-between">
+                    <div v-if="visible" v-confetti="{ particleCount: 1000,}" class="absolute celebrate left-1/2" />
                     <div class="flex flex-col">
-                        <img :src="profile_pic" alt="User Avatar" class="h-64 w-48 rounded-2xl object-cover mr-6" />
+                        <img :src="user.profile_picture !== null ? user.profile_picture: 'src/assets/images/cat.jpg'" alt="User Avatar" class="h-64 w-48 rounded-2xl object-cover mr-6" />
                         <div>
                             <h1 class="text-2xl font-extra-light">Details</h1>
                             <p class="text-dark_blue font-extralight inline">Gender:</p>
@@ -65,15 +69,15 @@ async function updateProfile() {
                         <span>@{{ user.username }}</span>
                         <div class="flex justify-between p-4 w-full">
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-                                <h2 class="font-bold text-2xl">{{ user.followers.length }}</h2>
+<!--                                <h2 class="font-bold text-2xl">{{ user.followers.length }}</h2>-->
                                 <p class="text-dark_blue">Followers</p>
                             </div>
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-                                <h2 class="font-bold text-2xl">{{ user.following.length }}</h2>
+<!--                                <h2 class="font-bold text-2xl">{{ user.following?.length }}</h2>-->
                                 <p class="text-dark_blue">Following</p>
                             </div>
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-                                <h2 class="font-bold text-2xl">{{ user.reviews.length }}</h2>
+<!--                                <h2 class="font-bold text-2xl">{{ user.reviews?.length }}</h2>-->
                                 <p class="text-dark_blue">Rated books</p>
                             </div>
                         </div>
@@ -138,7 +142,7 @@ async function updateProfile() {
                             </div>
                         </div>
                         <div class="p-2">
-                            <img :src="profile_pic" alt="profile" class="h-64 w-48 rounded-2xl object-cover mr-6" />
+                            <img :src="user.profile_picture !== null ? user.profile_picture: 'src/assets/images/cat.jpg'" alt="profile" class="h-64 w-48 rounded-2xl object-cover mr-6" />
                             <input class="rounded-2xl p-2 bg-primary m-5 border-dark_blue" type="file" @change="handleFileChange" />
                             <button @click="isFlipped = !isFlipped" class="border-2 m-2 border-dark_blue rounded-2xl p-3 font-semibold">Cancel</button>
                             <button type="submit" class="bg-dark_blue rounded-2xl p-3 text-white font-semibold">Update</button>

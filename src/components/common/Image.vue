@@ -18,7 +18,7 @@ const props = defineProps({
     },
 })
 
-const src = 'src/assets/images/' + props.name + '.' + props.ext
+const src = './src/assets/images/' + props.name + '.' + props.ext
 </script>
 
 <template>

@@ -7,21 +7,17 @@ import Author from '@/components/Books/Author.vue'
 import profileApi from '@/api/profile.js'
 import LikeButton from '@/components/Books/LikeButton.vue'
 import { useBookStore } from '@/stores/book.js'
+import { useRoute } from 'vue-router'
 
 
 const mainStore = useMainStore()
 const toast = useToast()
 const quoteStore = useBookStore()
-const props = defineProps({
-    id: {
-        type: String,
-        required: true,
-    },
-})
+const route = useRoute()
 onMounted(async () => {
     try {
         mainStore.loading = true
-        const quote_response = await profileApi.getQuote(props.id)
+        const quote_response = await profileApi.getQuote(route.params.id)
         if (quote_response.status === 200) {
             quoteStore.quote = quote_response.data
         } else {
@@ -57,7 +53,7 @@ const quote = computed(()=>quoteStore.quote)
                 </div>
             </div>
         </div>
-        <Author v-if="quote" :author="quote.author" />
+<!--        <Author v-if="quote" :author="quote.author"  />-->
     </main>
 </template>
 

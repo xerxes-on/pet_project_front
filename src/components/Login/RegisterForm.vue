@@ -40,12 +40,12 @@ const registerHandler = async () => {
             if (response.status === 200) {
                 authStore.setUser(response.data.user)
                 authStore.setToken(response.data.authorization.token)
-                await router.push({ name: 'home' })
+                await router.push({ name: 'verify' })
             } else {
                 toast.warning(response.data.message)
             }
         } catch (err) {
-            toast.error('Oops! Something went wrong. Try again', err)
+            toast.error('Oops!' + err)
         } finally {
             mainStore.loading = false
         }

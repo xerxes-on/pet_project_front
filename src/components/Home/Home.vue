@@ -35,7 +35,7 @@ onMounted(async () => {
             toast.warning('Could not connect! Try again')
         }
     } catch (err) {
-        toast.error('Oops! Something went wrong', err)
+        toast.error('Oops!'+ err)
     } finally {
         mainStore.loading = false
     }
@@ -87,15 +87,17 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
                 <h2 class="text-xl font-bold mb-4 text-center">Trending Books</h2>
                 <div class="grid grid-cols-2 gap-3 p-2 lg:grid-cols-3">
                     <div v-for="(book, index) in homeStore.trending" :key="index" class="relative p-3 rounded-xl shadow-lg" :class="classes[index]">
-                        <div :style="{ backgroundImage: `url(${book.image})` }" class="absolute inset-0 bg-cover rounded-xl blur-sm bg-center"></div>
-                        <div class="relative rounded-3xl z-5 flex flex-col justify-center items-center p-2 h-full bg-white opacity-70">
-                            <h1 class="text-center font-bold">{{ book.title }}</h1>
-                            <div class="text-lg text-center">
+                        <RouterLink :to="'book/'+book.id">
+                            <div :style="{ backgroundImage: `url(${book.image})` }" class="absolute inset-0 bg-cover rounded-xl blur-sm bg-center"></div>
+                            <div class="relative rounded-3xl z-5 flex flex-col justify-center items-center p-2 h-full bg-white opacity-70">
+                                <h1 class="text-center font-bold">{{ book.title }}</h1>
+                                <div class="text-lg text-center">
                                 <span v-for="n in 5" :key="n">
                                     <i :class="['text-yellow', n <= book.rating / 2 ? 'fa-solid fa-star' : 'fa-regular fa-star']"></i>
                                 </span>
+                                </div>
                             </div>
-                        </div>
+                        </RouterLink>
                     </div>
                 </div>
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
