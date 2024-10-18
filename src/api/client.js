@@ -13,7 +13,7 @@ const authStore = useAuthStore()
 
 
 const client = axios.create({
-    baseURL: 'https://2b98-213-230-112-200.ngrok-free.app/' + '/api',
+    baseURL: 'https://2b98-213-230-112-200.ngrok-free.app/' + 'api',
     headers: {
         'Content-Type': 'multipart/form-data',
     },
