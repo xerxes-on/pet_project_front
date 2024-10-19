@@ -108,7 +108,7 @@ console.log(user.value)
                     </div>
                     <div class="">
                         <h1 class="text-center text-xl py-5">My Favourite book</h1>
-                        <img src="../../assets/images/home7.svg" alt="Favorite Book" class="w-44 rounded-lg object-cover" />
+                        <img src="../../../public/images/home7.svg" alt="Favorite Book" class="w-44 rounded-lg object-cover" />
                         <button @click="isFlipped = !isFlipped" class="m-5 bg-dark_blue text-white px-4 py-2 rounded-lg mt-10">Edit Profile</button>
                     </div>
                 </div>
