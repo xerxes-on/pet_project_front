@@ -38,7 +38,7 @@ async function updateProfile() {
             toast.warning(response.data.message)
         }
     } catch (error) {
-        toast.error('Oops! Something went wrong. Try again', error)
+        toast.error('Oops! '+ error)
     } finally {
         mainStore.loading = false
     }

@@ -33,7 +33,6 @@ onMounted(async () => {
 })
 const book = computed(() => bookStore.book)
 const reviews = computed(() => bookStore.reviews['ratings'])
-console.log(book.value)
 </script>
 
 <template>

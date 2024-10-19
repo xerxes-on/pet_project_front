@@ -6,6 +6,7 @@ import FollowAuthorButton from '@/components/Books/FollowAuthorButton.vue'
 import bookApi from '@/api/book.js'
 import { vConfetti } from '@neoconfetti/vue'
 import 'animate.css'
+import { useBookStore } from '@/stores/book.js'
 
 const rates = [
     { star: 5, width: '80%', percent: '80%' },
@@ -41,15 +42,13 @@ const submitReview = (async () => {
     try {
         mainStore.loading = true
         const response = await bookApi.rateBook(data)
-        console.log(data)
-        console.log(response.data)
         if (response.status === 200) {
             visible.value = !visible.value
-        } else {
-            toast.warning(response.data.message)
+            const bookReviews = await bookApi.getBookReviews(data.book_id)
+            useBookStore().reviews = bookReviews.data
         }
     } catch (err) {
-        toast.error('Oops! Something went wrong. Try again.', err)
+        toast.warning('Oops!' + err)
     } finally {
         mainStore.loading = false
     }

@@ -10,11 +10,11 @@ export const useAuthStore = defineStore(
     'authStore',
     () => {
         const user = ref(null)
-        const token = ref('')
+        const token = ref(null)
 
         const resetStore = () => {
             user.value = null
-            token.value = ''
+            token.value = null
         }
         const setUser = (newUser) => {
             user.value = newUser
