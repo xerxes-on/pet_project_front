@@ -18,7 +18,7 @@ const hideMenu = () => {
         <!-- Logo Section -->
         <RouterLink :to="{ name: 'home' }">
             <div class="flex items-center space-x-2">
-                <img alt="Logo" class="w-11 h-11 rounded-full object-cover" src="@/assets/images/logo.png" />
+                <img alt="Logo" class="w-11 h-11 rounded-full object-cover" src="/images/logo.png" />
                 <span class="text-2xl font-bold">LetsRate</span>
             </div>
         </RouterLink>
@@ -48,7 +48,7 @@ const hideMenu = () => {
             </div>
 
             <RouterLink :to="{ name: 'profile' }">
-                <img alt="Profile" class="w-10 h-10 rounded-full object-cover" src="@/assets/images/logo.png" />
+                <img alt="Profile" class="w-10 h-10 rounded-full object-cover" src="/images/logo.png" />
             </RouterLink>
         </nav>
     </header>
@@ -112,7 +112,7 @@ const hideMenu = () => {
                 </div>
             </div>
             <!-- Bottom row: App Store Buttons -->
-            <div class="mt-10 flex flex md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mt-10 flex  md:flex-row justify-between items-center text-center md:text-left">
                 <!-- App Store Icons -->
                 <div class="flex space-x-10 mb-4 md:mb-0">
                     <a href="#">

@@ -13,7 +13,7 @@ const props = defineProps({
 
 <template>
     <div class="flex items-center mb-8">
-        <img :height="props.height" :width="props.width" alt="logo" class="rounded-full" src="@/assets/images/logo.png" />
+        <img :height="props.height" :width="props.width" alt="logo" class="rounded-full" src="/images/logo.png" />
     </div>
 </template>
 
