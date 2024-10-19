@@ -10,7 +10,7 @@ import 'animate.css'
 const profileStore = useProfileStore()
 const mainStore = useMainStore()
 const toast = useToast()
-const user = ref(profileStore.getUser())
+const user = profileStore.getUser()
 
 const isFlipped = ref(false)
 const visible = ref(false)
@@ -43,7 +43,7 @@ async function updateProfile() {
         mainStore.loading = false
     }
 }
-console.log(user.value)
+console.log(user.user)
 </script>
 
 <template>
@@ -54,11 +54,11 @@ console.log(user.value)
                 <div class="flex justify-between">
                     <div v-if="visible" v-confetti="{ particleCount: 1000,}" class="absolute celebrate left-1/2" />
                     <div class="flex flex-col">
-                        <img :src="user.profile_picture !== null ? user.profile_picture: 'src/assets/images/cat.jpg'" alt="User Avatar" class="h-64 w-48 rounded-2xl object-cover mr-6" />
+                        <img :src="user.profile_picture !== null ? user.profile_picture: '/images/cat.jpg'" alt="User Avatar" class="h-64 w-48 rounded-2xl object-cover mr-6" />
                         <div>
                             <h1 class="text-2xl font-extra-light">Details</h1>
                             <p class="text-dark_blue font-extralight inline">Gender:</p>
-                            <span class="mr-2">{{ user.gender == null ? 'Not Specified' : user.gender }} </span>
+                            <span class="mr-2">{{ user.gender === 2 ? 'No data' : (user.gender === 1 ? 'Male': 'Female' ) }} </span>
                             <br />
                             <p class="text-dark_blue inline">Date of Birth:</p>
                             <span>{{ user.date_of_birth == null ? 'No data' : formatDate(user.date_of_birth) }} </span>
@@ -69,20 +69,18 @@ console.log(user.value)
                         <span>@{{ user.username }}</span>
                         <div class="flex justify-between p-4 w-full">
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-<!--                                <h2 class="font-bold text-2xl">{{ user.followers.length }}</h2>-->
+                                <h2 class="font-bold text-2xl">{{ user.followers.length }}</h2>
                                 <p class="text-dark_blue">Followers</p>
                             </div>
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-<!--                                <h2 class="font-bold text-2xl">{{ user.following?.length }}</h2>-->
+                                <h2 class="font-bold text-2xl">{{ user.following?.length }}</h2>
                                 <p class="text-dark_blue">Following</p>
                             </div>
                             <div class="bg-light_blue p-4 m-4 rounded-2xl shadow-2xl text-white flex flex-col justify-center items-center">
-<!--                                <h2 class="font-bold text-2xl">{{ user.reviews?.length }}</h2>-->
+                                <h2 class="font-bold text-2xl">{{ user.reviews?.length }}</h2>
                                 <p class="text-dark_blue">Rated books</p>
                             </div>
                         </div>
-                        <h1 class="text-2xl font-extra-light">Details</h1>
-
                         <p class="text-dark_blue inline">Joined in:</p>
                         <span class="mr-4">{{ formatDate(user.created_at) }}</span>
                         <br />

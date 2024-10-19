@@ -13,9 +13,10 @@ const authStore = useAuthStore()
 
 
 const client = axios.create({
-    baseURL: 'https://2b98-213-230-112-200.ngrok-free.app/' + 'api',
+    baseURL: 'https://692f-213-230-102-202.ngrok-free.app/' + 'api',
     headers: {
         'Content-Type': 'multipart/form-data',
+        "ngrok-skip-browser-warning": 'true',
     },
 })
 
@@ -36,19 +37,21 @@ client.interceptors.response.use(
     (response) => {
         return response
     },
-    () => {
-        const router = useRouter()
-        const authStore = useAuthStore()
-        const homeStore = useHomeStore()
-        const bookStore = useBookStore()
-        const reviews = useReviewsStore()
-        const profile = useProfileStore()
+    (response) => {
+        if(response.status === 401 || response.status ===419){
+            const router = useRouter()
+            const authStore = useAuthStore()
+            const homeStore = useHomeStore()
+            const bookStore = useBookStore()
+            const reviews = useReviewsStore()
+            const profile = useProfileStore()
             authStore.resetStore()
             homeStore.resetStore()
             bookStore.resetStore()
             reviews.resetStore()
             profile.resetProfile()
             router.push({ name: 'login' })
+        }
     },
 )
 export default client

@@ -27,12 +27,14 @@ onMounted(async () => {
         const suggestions = await homeApi.getSuggestedBooks()
         const trending = await homeApi.getTrendingBooks()
         const response_user = await profileApi.getProfileDetails()
-        if (response_user.status === 200 && suggestions.status === 200 && trending.status === 200) {
-            homeStore.suggestions = suggestions.data
-            profileStore.user = response_user.data
-            homeStore.trending = trending.data
-        } else {
-            toast.warning('Could not connect! Try again')
+        if (response_user.status === 200){
+            profileStore.setUser( response_user.data.user)
+        }
+        if(suggestions.status === 200){
+            homeStore.setSuggestions(suggestions.data)
+        }
+        if(trending.status === 200){
+            homeStore.setTrending( trending.data)
         }
     } catch (err) {
         toast.error('Oops!'+ err)
@@ -103,8 +105,7 @@ const classes = ['row-span-2', 'col-span-2', 'col-span-2', '', '']
                 <h2 class="text-xl font-bold mb-4 text-center pt-10">Suggestions</h2>
                 <div class="relative overflow-hidden w-full">
                     <!-- Scrolling container -->
-                    <Suggestions v-if="homeStore.suggestions"
-                        :suggested-books="homeStore.suggestions" />
+                    <Suggestions v-if="homeStore.suggestions" :suggested-books="homeStore.suggestions" />
                 </div>
             </div>
             <!-- Right Sidebar -->

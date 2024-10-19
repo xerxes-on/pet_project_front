@@ -9,7 +9,7 @@ const getProfileDetails = () => {
 
 const getQuote = (id) => {
     return client
-        .get('/quotes/' + id)
+        .post('/quotes/' + id)
         .then((response) => response)
         .catch((error) => error.response)
 }

@@ -37,12 +37,6 @@ export const useProfileStore = defineStore(
 
         function resetProfile(){
             user.value = null
-            reviewCounts.value = null
-            reviewMonths.value = null
-            books_status.finished.value = null
-            books_status.reading.value = null
-            books_status.finished.value = null
-
         }
         return {
             user,

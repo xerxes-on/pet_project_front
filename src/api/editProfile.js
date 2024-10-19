@@ -2,7 +2,7 @@ import client from '@/api/client.js'
 
 const edit = (data) => {
     return client
-        .put('/profile_edit', data)
+        .post('/profile_edit?_method=PUT', data)
         .then((response) => response)
         .catch((error) => error.response)
 }

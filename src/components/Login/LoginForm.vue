@@ -24,11 +24,11 @@ const validations = {
 }
 const v$ = useVuelidate(validations, data)
 const loginHandler = async () => {
-    const validation = await v$.value.$validate()
-    if (validation) {
+        await v$.value.$validate()
         try {
             mainStore.loading = true
             const response = await authAPI.login(data)
+            console.log(response)
             if (response.status === 200) {
                 const authStore = useAuthStore()
                 authStore.setUser(response.data.user)
@@ -38,11 +38,10 @@ const loginHandler = async () => {
                 toast.warning(response.data.message)
             }
         } catch (err) {
-            toast.error('Oops! Something went wrong. Try again.'+ err)
+            toast.error('Oops!'+ err)
         } finally {
             mainStore.loading = false
         }
-    }
 }
 </script>
 <template>

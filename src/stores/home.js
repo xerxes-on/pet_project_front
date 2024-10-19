@@ -13,11 +13,19 @@ export const useHomeStore = defineStore(
             trending.value = null
             suggestions.value = null
         }
+        function setTrending(s){
+            trending.value = s
+        }
+        function setSuggestions(suggest){
+            suggestions.value = suggest
+        }
         return {
             trending,
             suggestions,
             images,
             resetStore,
+            setTrending,
+            setSuggestions
         }
     },
     { persist: true }

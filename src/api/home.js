@@ -2,14 +2,14 @@ import client from '@/api/client.js'
 
 const getTrendingBooks = () => {
     return client
-        .get('/trending_books')
+        .post('/trending_books')
         .then((response) => response)
         .catch((error) => error.response)
 }
 
 const getSuggestedBooks = () => {
     return client
-        .get('/suggestions')
+        .post('/suggestions')
         .then((response) => response)
         .catch((error) => error.response)
 }

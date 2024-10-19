@@ -18,7 +18,6 @@ onMounted(async () => {
         mainStore.loading = true
         const bookResponse = await bookApi.getBookDetails(route.params.id)
         const bookReviews = await bookApi.getBookReviews(route.params.id)
-        console.log(bookReviews)
         if (bookResponse.status === 200 && bookReviews.status === 200) {
             bookStore.book = bookResponse.data
             bookStore.reviews = bookReviews.data
@@ -34,7 +33,7 @@ onMounted(async () => {
 })
 const book = computed(() => bookStore.book)
 const reviews = computed(() => bookStore.reviews['ratings'])
-
+console.log(book.value)
 </script>
 
 <template>

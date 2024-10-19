@@ -55,6 +55,11 @@ const router = createRouter({
             component: () => import('@/views/EmailVerify.vue'),
         },
         {
+            path: '/logout',
+            name: 'logout',
+            function () {useAuthStore().logout()}
+        },
+        {
             path: '/:pathMatch(.*)*',
             name: 'notFound',
             component: () => import('@/views/NotFound.vue'),
