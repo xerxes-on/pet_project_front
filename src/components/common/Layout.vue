@@ -32,20 +32,13 @@ const hideMenu = () => {
             <!-- Dropdown for My Books -->
             <div class="relative group" @mouseenter="showMenu('books')" @mouseleave="hideMenu">
                 <RouterLink :to="{ name: 'myBooks' }" class="hover:bg-light_blue p-2 rounded-2xl font-semibold">Books </RouterLink>
-                <DropDown v-if="activeMenu === 'books'" :items="['My Books 1', 'My Books 2']" />
             </div>
 
             <!-- Dropdown for Reviews -->
             <div class="relative group" @mouseenter="showMenu('reviews')" @mouseleave="hideMenu">
                 <a class="hover:bg-light_blue p-2 rounded-2xl font-semibold" href="/reviews">Reviews</a>
-                <DropDown v-if="activeMenu === 'reviews'" :items="['Review 1', 'Review 2']" />
             </div>
 
-            <!-- Dropdown for Community -->
-            <div class="relative group" @mouseenter="showMenu('community')" @mouseleave="hideMenu">
-                <a class="hover:bg-light_blue p-2 rounded-2xl font-semibold" href="#">Community</a>
-                <DropDown v-if="activeMenu === 'community'" :items="['Community 1', 'Community 2']" />
-            </div>
 
             <RouterLink :to="{ name: 'profile' }">
                 <img alt="Profile" class="w-10 h-10 rounded-full object-cover" src="/images/logo.png" />
